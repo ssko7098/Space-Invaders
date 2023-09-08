@@ -49,6 +49,10 @@ public class GameEngine {
 			go.update();
 		}
 
+		if(player.isLaserExists()) {
+			renderables.add(player.getLaser());
+		}
+
 		// ensure that renderable foreground objects don't go off-screen
 		for(Renderable ro: renderables){
 			if(!ro.getLayer().equals(Renderable.Layer.FOREGROUND)){

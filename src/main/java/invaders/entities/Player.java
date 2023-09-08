@@ -1,5 +1,9 @@
 package invaders.entities;
 
+import invaders.entities.projectiles.PlayerProjectile;
+import invaders.entities.projectiles.PlayerProjectileFactory;
+import invaders.entities.projectiles.Projectile;
+import invaders.entities.projectiles.ProjectileFactory;
 import invaders.logic.Damagable;
 import invaders.physics.Moveable;
 import invaders.physics.Vector2D;
@@ -9,6 +13,7 @@ import invaders.rendering.Renderable;
 import javafx.scene.image.Image;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class Player implements Moveable, Damagable, Renderable {
 
@@ -17,8 +22,11 @@ public class Player implements Moveable, Damagable, Renderable {
     private double health = 100;
 
     private final double width = 25;
-    private final double height = 30;
+    private final double height = 25;
     private final Image image;
+
+    private ArrayList<Projectile> laser = new ArrayList<>();
+    private boolean laserExists = false;
 
     public Player(Vector2D position){
         this.image = new Image(new File("src/main/resources/Laser_Cannon.png").toURI().toString(), width, height, true, true);
@@ -61,7 +69,20 @@ public class Player implements Moveable, Damagable, Renderable {
     }
 
     public void shoot(){
-        // todo
+        if(this.laser.isEmpty()) {
+            ProjectileFactory pFactory = new PlayerProjectileFactory();
+            Projectile projectile = pFactory.make(this);
+            this.laser.add(projectile);
+            this.laserExists = true;
+        }
+    }
+
+    public boolean isLaserExists() {
+        return this.laserExists;
+    }
+
+    public Projectile getLaser() {
+        return this.laser.get(0);
     }
 
     @Override
