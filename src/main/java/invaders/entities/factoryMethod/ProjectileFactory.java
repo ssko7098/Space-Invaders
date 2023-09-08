@@ -1,4 +1,4 @@
-package invaders.entities.projectiles;
+package invaders.entities.factoryMethod;
 import invaders.rendering.Renderable;
 
 public interface ProjectileFactory {

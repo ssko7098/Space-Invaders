@@ -1,20 +1,14 @@
 package invaders.engine;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import invaders.ConfigReader;
 import invaders.GameObject;
 import invaders.entities.Player;
-import invaders.physics.Moveable;
+import invaders.entities.builderPattern.BunkerBuilder;
 import invaders.physics.Vector2D;
 import invaders.rendering.Renderable;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 /**
  * This class manages the main loop and logic of the game
@@ -29,6 +23,8 @@ public class GameEngine {
 	private boolean left;
 	private boolean right;
 
+	private int laserCount = 0;
+
 	public GameEngine(String config){
 		// read the config here
 		gameobjects = new ArrayList<GameObject>();
@@ -36,7 +32,16 @@ public class GameEngine {
 
 		Vector2D playerStart = this.config.getPlayer();
 
-		player = new Player(playerStart);
+		for(int i=0; i<3; i++) {
+			Renderable bunker = new BunkerBuilder()
+					.addPosition(i)
+					.addSize(i)
+					.build();
+
+			renderables.add(bunker);
+		}
+
+		player = new Player(playerStart, config);
 		renderables.add(player);
 	}
 
@@ -45,12 +50,15 @@ public class GameEngine {
 	 */
 	public void update(){
 		movePlayer();
-		for(GameObject go: gameobjects){
-			go.update();
+
+		if(player.isLaserExists() && laserCount == 0) {
+			renderables.add(player.getLaser());
+			gameobjects.add(player.getLaser());
+			laserCount = 1;
 		}
 
-		if(player.isLaserExists()) {
-			renderables.add(player.getLaser());
+		for(GameObject go: gameobjects){
+			go.update();
 		}
 
 		// ensure that renderable foreground objects don't go off-screen
@@ -108,6 +116,15 @@ public class GameEngine {
 
 		if(right){
 			player.right();
+		}
+
+		if(player.isLaserExists() && player.getLaser().getPosition().getY() <= 1) {
+
+			player.getLaser().markForDelete();
+			renderables.remove(player.getLaser());
+			gameobjects.remove(player.getLaser());
+
+			player.removeLaser();
 		}
 	}
 }

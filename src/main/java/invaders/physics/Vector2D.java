@@ -28,4 +28,8 @@ public class Vector2D {
 	public void setY(double y){
 		this.y = y;
 	}
+
+	public String toString() {
+		return this.x + ", " + this.y;
+	}
 }

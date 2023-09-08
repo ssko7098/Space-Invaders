@@ -1,4 +1,4 @@
-package invaders.entities.projectiles;
+package invaders.entities.factoryMethod;
 import invaders.physics.Vector2D;
 import invaders.rendering.Renderable;
 

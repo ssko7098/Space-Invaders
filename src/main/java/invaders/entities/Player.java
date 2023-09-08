@@ -1,9 +1,8 @@
 package invaders.entities;
 
-import invaders.entities.projectiles.PlayerProjectile;
-import invaders.entities.projectiles.PlayerProjectileFactory;
-import invaders.entities.projectiles.Projectile;
-import invaders.entities.projectiles.ProjectileFactory;
+import invaders.entities.factoryMethod.PlayerProjectileFactory;
+import invaders.entities.factoryMethod.Projectile;
+import invaders.entities.factoryMethod.ProjectileFactory;
 import invaders.logic.Damagable;
 import invaders.physics.Moveable;
 import invaders.physics.Vector2D;
@@ -11,41 +10,65 @@ import invaders.rendering.Animator;
 import invaders.rendering.Renderable;
 
 import javafx.scene.image.Image;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Player implements Moveable, Damagable, Renderable {
 
     private final Vector2D position;
     private final Animator anim = null;
-    private double health = 100;
+    private double lives;
+    private double speed;
 
-    private final double width = 25;
-    private final double height = 25;
+    private final double width = 50;
+    private final double height = 40;
     private final Image image;
 
     private ArrayList<Projectile> laser = new ArrayList<>();
-    private boolean laserExists = false;
 
-    public Player(Vector2D position){
-        this.image = new Image(new File("src/main/resources/Laser_Cannon.png").toURI().toString(), width, height, true, true);
-        this.position = position;
+    public Player(Vector2D position, String path){
+
+        JSONParser parser = new JSONParser();
+
+        try {
+            Object object = parser.parse(new FileReader(path));
+
+            JSONObject jsonObject = (JSONObject) object;
+
+            JSONObject jsonGame = (JSONObject) jsonObject.get("Player");
+
+            Long x = (Long) ((JSONObject) jsonGame.get("position")).get("x");
+            Long y = (Long) ((JSONObject) jsonGame.get("position")).get("y");
+
+            this.position = new Vector2D(x, y);
+            this.image = new Image(new File("src/main/resources/Laser_Cannon.png").toURI().toString(), width, height, true, true);
+            this.lives = Double.parseDouble(jsonGame.get("lives").toString());
+            this.speed = Double.parseDouble(jsonGame.get("speed").toString());
+
+        } catch (IOException | ParseException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void takeDamage(double amount) {
-        this.health -= amount;
+        this.lives -= amount;
     }
 
     @Override
     public double getHealth() {
-        return this.health;
+        return this.lives;
     }
 
     @Override
     public boolean isAlive() {
-        return this.health > 0;
+        return this.lives > 0;
     }
 
     @Override
@@ -60,29 +83,32 @@ public class Player implements Moveable, Damagable, Renderable {
 
     @Override
     public void left() {
-        this.position.setX(this.position.getX() - 1);
+        this.position.setX(this.position.getX() - speed);
     }
 
     @Override
     public void right() {
-        this.position.setX(this.position.getX() + 1);
+        this.position.setX(this.position.getX() + speed);
     }
 
-    public void shoot(){
-        if(this.laser.isEmpty()) {
+    public void shoot() {
+        if (this.laser.isEmpty()) {
             ProjectileFactory pFactory = new PlayerProjectileFactory();
             Projectile projectile = pFactory.make(this);
             this.laser.add(projectile);
-            this.laserExists = true;
         }
     }
 
     public boolean isLaserExists() {
-        return this.laserExists;
+        return !this.laser.isEmpty();
     }
 
     public Projectile getLaser() {
         return this.laser.get(0);
+    }
+
+    public void removeLaser() {
+        this.laser.clear();
     }
 
     @Override
