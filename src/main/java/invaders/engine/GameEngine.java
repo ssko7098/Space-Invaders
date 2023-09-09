@@ -5,9 +5,12 @@ import java.util.List;
 
 import invaders.ConfigReader;
 import invaders.GameObject;
+import invaders.entities.EntityViewImpl;
 import invaders.entities.Player;
 import invaders.entities.builderPattern.AlienBuilder;
 import invaders.entities.builderPattern.BunkerBuilder;
+import invaders.logic.Damagable;
+import invaders.physics.BoxCollider;
 import invaders.physics.Collider;
 import invaders.physics.Vector2D;
 import invaders.rendering.Renderable;
@@ -19,6 +22,8 @@ public class GameEngine {
 
 	private List<GameObject> gameobjects;
 	private List<Renderable> renderables;
+	private List<Collider> collidables;
+	private List<Damagable> damagables;
 	private Player player;
 	private ConfigReader config = new ConfigReader();
 
@@ -31,8 +36,8 @@ public class GameEngine {
 		// read the config here
 		gameobjects = new ArrayList<GameObject>();
 		renderables = new ArrayList<Renderable>();
-
-		Vector2D playerStart = this.config.getPlayer();
+		collidables = new ArrayList<Collider>();
+		damagables = new ArrayList<Damagable>();
 
 		for(int i=0; i<3; i++) {
 			Renderable bunker = new BunkerBuilder()
@@ -41,6 +46,8 @@ public class GameEngine {
 					.build();
 
 			renderables.add(bunker);
+			collidables.add( (Collider) bunker);
+			damagables.add((Damagable) bunker);
 		}
 
 		for(int x=0; x<18; x++) {
@@ -50,10 +57,15 @@ public class GameEngine {
 					.build();
 
 			renderables.add(alien);
+			gameobjects.add((GameObject) alien);
+			collidables.add( (Collider) alien);
+			damagables.add((Damagable) alien);
 		}
 
-		player = new Player(playerStart, config);
+		player = new Player(config);
 		renderables.add(player);
+		collidables.add(player);
+		damagables.add(player);
 	}
 
 	/**
@@ -65,7 +77,39 @@ public class GameEngine {
 		if(player.isLaserExists() && laserCount == 0) {
 			renderables.add(player.getLaser());
 			gameobjects.add(player.getLaser());
+			collidables.add(player.getLaser());
 			laserCount = 1;
+		}
+
+		for(int i=0; i<collidables.size(); i++) {
+			for(int x=0; x<collidables.size(); x++) {
+
+				Collider col = collidables.get(i);
+				Collider colB = collidables.get(x);
+
+				if(!col.equals(colB)) {
+					BoxCollider test = new BoxCollider(col.getWidth(), col.getHeight(), col.getPosition());
+
+					if(test.isColliding(colB)) {
+						//TODO Handle Collisions
+
+						for(Damagable dam: damagables) {
+							if(dam.equals(col)) {
+								dam.takeDamage();
+							}
+						}
+
+						if(player.isLaserExists() && col == player.getLaser()) {
+							System.out.println("COLLIDES");
+							renderables.remove(col);
+							player.removeLaser();
+							collidables.remove(col);
+							laserCount = 0;
+							break;
+						}
+					}
+				}
+			}
 		}
 
 		for(GameObject go: gameobjects){
@@ -91,6 +135,14 @@ public class GameEngine {
 
 			if(ro.getPosition().getY() <= 0) {
 				ro.getPosition().setY(1);
+
+				if(player.isLaserExists() && ro == player.getLaser()) {
+					System.out.println("END OF SCREEN");
+					renderables.remove(ro);
+					player.removeLaser();
+					laserCount = 0;
+					break;
+				}
 			}
 		}
 	}
@@ -130,8 +182,6 @@ public class GameEngine {
 		}
 
 		if(player.isLaserExists() && player.getLaser().getPosition().getY() <= 1) {
-
-			player.getLaser().markForDelete();
 			renderables.remove(player.getLaser());
 			gameobjects.remove(player.getLaser());
 

@@ -4,6 +4,7 @@ import invaders.entities.factoryMethod.PlayerProjectileFactory;
 import invaders.entities.factoryMethod.Projectile;
 import invaders.entities.factoryMethod.ProjectileFactory;
 import invaders.logic.Damagable;
+import invaders.physics.Collider;
 import invaders.physics.Moveable;
 import invaders.physics.Vector2D;
 import invaders.rendering.Animator;
@@ -19,20 +20,20 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Player implements Moveable, Damagable, Renderable {
+public class Player implements Moveable, Damagable, Renderable, Collider {
 
     private final Vector2D position;
     private final Animator anim = null;
     private double lives;
     private double speed;
 
-    private final double width = 50;
-    private final double height = 40;
+    private final double width = 30;
+    private final double height = 30;
     private final Image image;
 
     private ArrayList<Projectile> laser = new ArrayList<>();
 
-    public Player(Vector2D position, String path){
+    public Player(String path){
 
         JSONParser parser = new JSONParser();
 
@@ -47,7 +48,7 @@ public class Player implements Moveable, Damagable, Renderable {
             Long y = (Long) ((JSONObject) jsonGame.get("position")).get("y");
 
             this.position = new Vector2D(x, y);
-            this.image = new Image(new File("src/main/resources/Laser_Cannon.png").toURI().toString(), width, height, true, true);
+            this.image = new Image(new File("src/main/resources/player.png").toURI().toString(), width, height, true, true);
             this.lives = Double.parseDouble(jsonGame.get("lives").toString());
             this.speed = Double.parseDouble(jsonGame.get("speed").toString());
 
@@ -57,8 +58,8 @@ public class Player implements Moveable, Damagable, Renderable {
     }
 
     @Override
-    public void takeDamage(double amount) {
-        this.lives -= amount;
+    public void takeDamage() {
+        this.lives -= 1;
     }
 
     @Override

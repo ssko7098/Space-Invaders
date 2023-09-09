@@ -1,5 +1,6 @@
 package invaders.entities.builderPattern;
 
+import invaders.GameObject;
 import invaders.logic.Damagable;
 import invaders.physics.Collider;
 import invaders.physics.Moveable;
@@ -9,11 +10,11 @@ import javafx.scene.image.Image;
 
 import java.io.File;
 
-public class Alien implements Renderable, Collider, Moveable, Damagable {
+public class Alien implements Renderable, Collider, Moveable, Damagable, GameObject {
 
     private final Vector2D position;
-    private final double height = 40;
-    private final double width = 35;
+    private final double height = 30;
+    private final double width = 30;
     private final Image image;
 
     public Alien(Vector2D position) {
@@ -22,7 +23,7 @@ public class Alien implements Renderable, Collider, Moveable, Damagable {
     }
 
     @Override
-    public void takeDamage(double amount) {
+    public void takeDamage() {
 
     }
 
@@ -79,5 +80,15 @@ public class Alien implements Renderable, Collider, Moveable, Damagable {
     @Override
     public Layer getLayer() {
         return Layer.FOREGROUND;
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void update() {
+        //TODO
     }
 }

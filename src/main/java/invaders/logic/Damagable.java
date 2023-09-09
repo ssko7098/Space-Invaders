@@ -2,7 +2,7 @@ package invaders.logic;
 
 public interface Damagable {
 
-	public void takeDamage(double amount);
+	public void takeDamage();
 
 	public double getHealth();
 

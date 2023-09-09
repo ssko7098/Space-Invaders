@@ -1,5 +1,8 @@
 package invaders.entities.builderPattern;
 
+import invaders.entities.states.BunkerState;
+import invaders.entities.states.*;
+import invaders.logic.Damagable;
 import invaders.physics.Collider;
 import invaders.physics.Vector2D;
 import invaders.rendering.Renderable;
@@ -7,18 +10,21 @@ import javafx.scene.image.Image;
 
 import java.io.File;
 
-public class Bunker implements Renderable, Collider {
+public class Bunker implements Renderable, Collider, Damagable {
 
     private final Vector2D position;
     private final double height;
     private final double width;
-    private final Image image;
+    private Image image;
+    private BunkerState state;
+    private boolean delete = false;
 
     public Bunker(Vector2D position, Vector2D size) {
         this.position = position;
         this.width = size.getX();
         this.height = size.getY();
         this.image = new Image(new File("src/main/resources/bunker.png").toURI().toString(), width, height, true, true);
+        this.state = new GreenState();
     }
 
     @Override
@@ -44,5 +50,37 @@ public class Bunker implements Renderable, Collider {
     @Override
     public Layer getLayer() {
         return Layer.FOREGROUND;
+    }
+
+    public void changeState(BunkerState state) {
+        this.state = state;
+    }
+
+    @Override
+    public void takeDamage() {
+        this.state.loseLife(this);
+    }
+
+    @Override
+    public double getHealth() {
+        return 0;
+    }
+
+    @Override
+    public boolean isAlive() {
+        return false;
+    }
+
+    public void setImage(Image image) {
+        this.image.cancel();
+        this.image = image;
+    }
+
+    public boolean isMarkedForDelete() {
+        return delete;
+    }
+
+    public void markForDelete() {
+        this.delete = true;
     }
 }
