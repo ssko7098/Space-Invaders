@@ -6,7 +6,9 @@ import java.util.List;
 import invaders.ConfigReader;
 import invaders.GameObject;
 import invaders.entities.Player;
+import invaders.entities.builderPattern.AlienBuilder;
 import invaders.entities.builderPattern.BunkerBuilder;
+import invaders.physics.Collider;
 import invaders.physics.Vector2D;
 import invaders.rendering.Renderable;
 
@@ -39,6 +41,15 @@ public class GameEngine {
 					.build();
 
 			renderables.add(bunker);
+		}
+
+		for(int x=0; x<18; x++) {
+			Renderable alien = new AlienBuilder()
+					.addPosition(x)
+					.addProjectileStrategy(x)
+					.build();
+
+			renderables.add(alien);
 		}
 
 		player = new Player(playerStart, config);
