@@ -16,7 +16,7 @@ public class PlayerProjectile extends Projectile {
     private Image image;
     private final Animator anim = null;
 
-    private final double width = 20;
+    private final double width = 3;
     private final double height = 10;
 
     public PlayerProjectile(Vector2D position) {

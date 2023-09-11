@@ -13,8 +13,8 @@ import java.io.File;
 public class Alien implements Renderable, Collider, Moveable, Damagable, GameObject {
 
     private final Vector2D position;
-    private final double height = 30;
-    private final double width = 30;
+    private final double height = 22;
+    private final double width = 31;
     private final Image image;
 
     public Alien(Vector2D position) {

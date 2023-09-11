@@ -27,6 +27,8 @@ public class GameWindow {
     private double yViewportOffset = 0.0;
     private static final double VIEWPORT_MARGIN = 280.0;
 
+    public double count = 0;
+
 	public GameWindow(GameEngine model, int width, int height){
 
 		this.width = width;
@@ -56,6 +58,7 @@ public class GameWindow {
         model.update();
 
         List<Renderable> renderables = model.getRenderables();
+
         for (Renderable entity : renderables) {
             boolean notFound = true;
             for (EntityView view : entityViews) {
@@ -72,9 +75,21 @@ public class GameWindow {
             }
         }
 
+        for (EntityView entity : entityViews) {
+            boolean removed = true;
+            for (Renderable ren : renderables) {
+                if (entity.matchesEntity(ren)) {
+                    removed = false;
+                }
+            }
+
+            if (removed) {
+                entity.markForDelete();
+            }
+        }
+
         for (EntityView entityView : entityViews) {
             if (entityView.isMarkedForDelete()) {
-
                 pane.getChildren().remove(entityView.getNode());
             }
         }
