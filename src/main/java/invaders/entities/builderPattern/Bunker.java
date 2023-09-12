@@ -17,7 +17,7 @@ public class Bunker implements Renderable, Collider, Damagable {
     private final double width;
     private Image image;
     private BunkerState state;
-    private boolean delete = false;
+    private int lives = 3;
 
     public Bunker(Vector2D position, Vector2D size) {
         this.position = position;
@@ -59,28 +59,21 @@ public class Bunker implements Renderable, Collider, Damagable {
     @Override
     public void takeDamage() {
         this.state.loseLife(this);
+        lives -= 1;
     }
 
     @Override
     public double getHealth() {
-        return 0;
+        return lives;
     }
 
     @Override
     public boolean isAlive() {
-        return false;
+        return lives > 0;
     }
 
     public void setImage(Image image) {
         this.image.cancel();
         this.image = image;
-    }
-
-    public boolean isMarkedForDelete() {
-        return delete;
-    }
-
-    public void markForDelete() {
-        this.delete = true;
     }
 }

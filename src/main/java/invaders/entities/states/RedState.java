@@ -6,7 +6,7 @@ public class RedState implements BunkerState{
 
     @Override
     public void loseLife(Bunker bunker) {
-        bunker.markForDelete();
+
     }
 
 }

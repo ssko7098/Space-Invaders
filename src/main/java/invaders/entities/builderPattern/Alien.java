@@ -1,6 +1,8 @@
 package invaders.entities.builderPattern;
 
+import invaders.ConfigReader;
 import invaders.GameObject;
+import invaders.entities.Direction;
 import invaders.logic.Damagable;
 import invaders.physics.Collider;
 import invaders.physics.Moveable;
@@ -15,7 +17,11 @@ public class Alien implements Renderable, Collider, Moveable, Damagable, GameObj
     private final Vector2D position;
     private final double height = 22;
     private final double width = 31;
-    private final Image image;
+    private Image image;
+    private int lives = 1;
+    private ConfigReader config = new ConfigReader();
+    private Direction direction = Direction.DOWN;
+    private double speed = 0.2;
 
     public Alien(Vector2D position) {
         this.position = position;
@@ -24,7 +30,9 @@ public class Alien implements Renderable, Collider, Moveable, Damagable, GameObj
 
     @Override
     public void takeDamage() {
-
+        lives -= 1;
+//        this.image.cancel();
+//        this.image = new Image(new File("src/main/resources/explosion.png").toURI().toString(), 12, 12, true, true);
     }
 
     @Override
@@ -34,7 +42,7 @@ public class Alien implements Renderable, Collider, Moveable, Damagable, GameObj
 
     @Override
     public boolean isAlive() {
-        return false;
+        return lives > 0;
     }
 
     @Override
@@ -44,17 +52,17 @@ public class Alien implements Renderable, Collider, Moveable, Damagable, GameObj
 
     @Override
     public void down() {
-        this.getPosition().setY(getPosition().getY() + 1);
+        this.getPosition().setY(getPosition().getY() + speed);
     }
 
     @Override
     public void left() {
-        this.getPosition().setX(getPosition().getX() - 1);
+        this.getPosition().setX(getPosition().getX() - speed);
     }
 
     @Override
     public void right() {
-        this.getPosition().setX(getPosition().getX() + 1);
+        this.getPosition().setX(getPosition().getX() + speed);
     }
 
     @Override
@@ -89,6 +97,21 @@ public class Alien implements Renderable, Collider, Moveable, Damagable, GameObj
 
     @Override
     public void update() {
-        //TODO
+        if(direction.equals(Direction.RIGHT)) {
+            this.right();
+        }
+        else if(direction.equals(Direction.LEFT)) {
+            this.left();
+        }
+        else if(direction.equals(Direction.DOWN)) {
+            this.down();
+        }
+
+        if(getPosition().getX() + width >= (config.getGameSize()[0] - 1)) {
+            direction = Direction.DOWN;
+        }
+        if(getPosition().getX() <= 1) {
+            direction = Direction.DOWN;
+        }
     }
 }

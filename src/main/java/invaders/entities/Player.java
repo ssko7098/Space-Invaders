@@ -15,6 +15,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -25,7 +26,7 @@ public class Player implements Moveable, Damagable, Renderable, Collider {
     private final Vector2D position;
     private final Animator anim = null;
     private double lives;
-    private double speed;
+    private final double speed;
 
     private final double width = 30;
     private final double height = 30;

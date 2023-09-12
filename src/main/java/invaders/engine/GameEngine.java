@@ -47,7 +47,7 @@ public class GameEngine {
 
 			renderables.add(bunker);
 			collidables.add( (Collider) bunker);
-			damagables.add((Damagable) bunker);
+			damagables.add( (Damagable) bunker);
 		}
 
 		for(int x=0; x<18; x++) {
@@ -57,9 +57,9 @@ public class GameEngine {
 					.build();
 
 			renderables.add(alien);
-			gameobjects.add((GameObject) alien);
+			gameobjects.add( (GameObject) alien);
 			collidables.add( (Collider) alien);
-			damagables.add((Damagable) alien);
+			damagables.add( (Damagable) alien);
 		}
 
 		player = new Player(config);
@@ -92,20 +92,32 @@ public class GameEngine {
 
 					if(test.isColliding(colB)) {
 						//TODO Handle Collisions
+						if(player.isLaserExists() && col == player.getLaser()) {
+							renderables.remove(col);
+							player.removeLaser();
+							collidables.remove(col);
+							laserCount = 0;
+						}
+						else if(player.isLaserExists() && colB == player.getLaser()) {
+							renderables.remove(colB);
+							player.removeLaser();
+							collidables.remove(colB);
+							laserCount = 0;
+						}
+
 
 						for(Damagable dam: damagables) {
 							if(dam.equals(col)) {
 								dam.takeDamage();
 							}
-						}
+							else if(dam.equals(colB)) {
+								dam.takeDamage();
+							}
 
-						if(player.isLaserExists() && col == player.getLaser()) {
-							System.out.println("COLLIDES");
-							renderables.remove(col);
-							player.removeLaser();
-							collidables.remove(col);
-							laserCount = 0;
-							break;
+							if(!dam.isAlive()) {
+								renderables.remove( (Renderable) dam);
+								collidables.remove((Collider) dam);
+							}
 						}
 					}
 				}
@@ -137,7 +149,6 @@ public class GameEngine {
 				ro.getPosition().setY(1);
 
 				if(player.isLaserExists() && ro == player.getLaser()) {
-					System.out.println("END OF SCREEN");
 					renderables.remove(ro);
 					player.removeLaser();
 					laserCount = 0;
