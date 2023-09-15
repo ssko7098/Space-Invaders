@@ -5,14 +5,13 @@ import java.util.List;
 
 import invaders.ConfigReader;
 import invaders.GameObject;
-import invaders.entities.EntityViewImpl;
+import invaders.entities.AlienHorde;
 import invaders.entities.Player;
 import invaders.entities.builderPattern.AlienBuilder;
 import invaders.entities.builderPattern.BunkerBuilder;
 import invaders.logic.Damagable;
 import invaders.physics.BoxCollider;
 import invaders.physics.Collider;
-import invaders.physics.Vector2D;
 import invaders.rendering.Renderable;
 
 /**
@@ -31,13 +30,14 @@ public class GameEngine {
 	private boolean right;
 
 	private int laserCount = 0;
+	private AlienHorde alienHorde = new AlienHorde();
 
 	public GameEngine(String config){
 		// read the config here
-		gameobjects = new ArrayList<GameObject>();
-		renderables = new ArrayList<Renderable>();
-		collidables = new ArrayList<Collider>();
-		damagables = new ArrayList<Damagable>();
+		gameobjects = new ArrayList<>();
+		renderables = new ArrayList<>();
+		collidables = new ArrayList<>();
+		damagables = new ArrayList<>();
 
 		for(int i=0; i<3; i++) {
 			Renderable bunker = new BunkerBuilder()
@@ -58,6 +58,9 @@ public class GameEngine {
 
 			renderables.add(alien);
 			gameobjects.add( (GameObject) alien);
+
+			alienHorde.addAlien(alien);
+
 			collidables.add( (Collider) alien);
 			damagables.add( (Damagable) alien);
 		}
@@ -114,15 +117,25 @@ public class GameEngine {
 								dam.takeDamage();
 							}
 
+							for(int y=0; y<alienHorde.getAlienHorde().size(); y++) {
+								Renderable alien = alienHorde.getAlienHorde().get(y);
+
+								if(alien == dam && (alien == col || alien == colB)) {
+									alienHorde.removeAlien(alien);
+								}
+							}
+
 							if(!dam.isAlive()) {
 								renderables.remove( (Renderable) dam);
-								collidables.remove((Collider) dam);
+								collidables.remove( (Collider) dam);
 							}
 						}
 					}
 				}
 			}
 		}
+
+		alienHorde.update();
 
 		for(GameObject go: gameobjects){
 			go.update();

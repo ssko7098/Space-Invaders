@@ -20,7 +20,7 @@ public class Alien implements Renderable, Collider, Moveable, Damagable, GameObj
     private Image image;
     private int lives = 1;
     private ConfigReader config = new ConfigReader();
-    private Direction direction = Direction.DOWN;
+    private Direction direction = Direction.RIGHT;
     private double speed = 0.2;
 
     public Alien(Vector2D position) {
@@ -95,6 +95,14 @@ public class Alien implements Renderable, Collider, Moveable, Damagable, GameObj
 
     }
 
+    public void setDirection(Direction dir) {
+        this.direction = dir;
+    }
+
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
+
     @Override
     public void update() {
         if(direction.equals(Direction.RIGHT)) {
@@ -105,13 +113,6 @@ public class Alien implements Renderable, Collider, Moveable, Damagable, GameObj
         }
         else if(direction.equals(Direction.DOWN)) {
             this.down();
-        }
-
-        if(getPosition().getX() + width >= (config.getGameSize()[0] - 1)) {
-            direction = Direction.DOWN;
-        }
-        if(getPosition().getX() <= 1) {
-            direction = Direction.DOWN;
         }
     }
 }

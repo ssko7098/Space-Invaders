@@ -18,6 +18,7 @@ public class PlayerProjectile extends Projectile {
 
     private final double width = 3;
     private final double height = 10;
+    private double speed = 2;
 
     public PlayerProjectile(Vector2D position) {
         this.position = position;
@@ -26,7 +27,7 @@ public class PlayerProjectile extends Projectile {
 
     @Override
     public void up() {
-        this.position.setY(this.position.getY() - 2);
+        this.position.setY(this.position.getY() - speed);
     }
 
     @Override
