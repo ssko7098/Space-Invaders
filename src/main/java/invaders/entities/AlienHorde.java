@@ -14,6 +14,8 @@ public class AlienHorde implements GameObject {
     private double rightCount = 0;
     private double leftCount = 0;
     private boolean movingDown;
+    private boolean rightWall;
+    private boolean leftWall;
 
     public void addAlien(Renderable alien) {
         alienList.add( (Alien) alien);
@@ -47,32 +49,41 @@ public class AlienHorde implements GameObject {
         for(Alien alien : alienList) {
             int gameSize = Integer.parseInt(config.getGameSize()[0].toString());
 
-            if((alien.getPosition().getX() >= (gameSize - 1 - alien.getWidth())) && rightCount <= 1) {
+            if((alien.getPosition().getX() >= (gameSize - 1 - alien.getWidth())) && rightCount <= 1 && !movingDown) {
                 setDirectionForAll(Direction.DOWN);
                 movingDown = true;
+                rightWall = true;
                 break;
-//                rightCount += 0.017;
             }
-            else if((alien.getPosition().getX() >= (gameSize - 1 - alien.getWidth())) && rightCount > 1) {
+            else if(movingDown && rightCount > 1) {
                 setDirectionForAll(Direction.LEFT);
                 movingDown = false;
+                rightWall = false;
                 rightCount = 0;
                 break;
             }
 
-            if(alien.getPosition().getX() <= 1 && leftCount <= 1) {
+            if(alien.getPosition().getX() <= 1 && leftCount <= 1 && !movingDown) {
                 setDirectionForAll(Direction.DOWN);
-                leftCount += 0.017;
+                movingDown = true;
+                leftWall = true;
+                break;
             }
-            else if (alien.getPosition().getX() <= 1 && leftCount > 1){
+            else if (movingDown && leftCount > 1){
                 setDirectionForAll(Direction.RIGHT);
+                movingDown = false;
+                leftWall = false;
                 leftCount = 0;
+                break;
             }
 
         }
 
-        if(movingDown) {
+        if(movingDown && rightWall) {
             rightCount += 0.017;
+        }
+        else if(movingDown && leftWall) {
+            leftCount += 0.017;
         }
     }
 }
