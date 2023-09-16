@@ -99,8 +99,16 @@ public class Alien implements Renderable, Collider, Moveable, Damagable, GameObj
         this.direction = dir;
     }
 
+    public Direction getDirection() {
+        return direction;
+    }
+
     public void setSpeed(double speed) {
         this.speed = speed;
+    }
+
+    public double getSpeed() {
+        return speed;
     }
 
     @Override

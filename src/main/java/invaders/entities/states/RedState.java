@@ -5,7 +5,7 @@ import invaders.entities.builderPattern.Bunker;
 public class RedState implements BunkerState{
 
     @Override
-    public void loseLife(Bunker bunker) {
+    public void changeState(Bunker bunker) {
 
     }
 

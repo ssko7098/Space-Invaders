@@ -108,12 +108,8 @@ public class GameEngine {
 							laserCount = 0;
 						}
 
-
 						for(Damagable dam: damagables) {
-							if(dam.equals(col)) {
-								dam.takeDamage();
-							}
-							else if(dam.equals(colB)) {
+							if(dam.equals(col) || dam.equals(colB)) {
 								dam.takeDamage();
 							}
 

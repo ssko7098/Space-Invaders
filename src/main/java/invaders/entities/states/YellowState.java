@@ -8,7 +8,7 @@ import java.io.File;
 public class YellowState implements BunkerState{
 
     @Override
-    public void loseLife(Bunker bunker) {
+    public void changeState(Bunker bunker) {
         bunker.changeState(new RedState());
         bunker.setImage(new Image(new File("src/main/resources/redBunker.png").toURI().toString(),
                 bunker.getWidth(), bunker.getHeight(), true, true));
