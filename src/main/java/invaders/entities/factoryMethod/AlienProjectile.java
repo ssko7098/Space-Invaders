@@ -1,40 +1,47 @@
 package invaders.entities.factoryMethod;
 
-import invaders.entities.EntityView;
 import invaders.entities.strategy.ProjectileStrategy;
 import invaders.physics.Vector2D;
 import invaders.rendering.Animator;
-import invaders.rendering.Renderable;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import java.io.File;
 
-public class PlayerProjectile extends Projectile {
+public class AlienProjectile extends Projectile{
 
     private final Vector2D position;
     private Image image;
     private final Animator anim = null;
 
     private final double width = 3;
-    private final double height = 10;
-    private double speed = 2;
+    private final double height = 9;
+    private double speed;
+
     private ProjectileStrategy strategy;
 
-    public PlayerProjectile(Vector2D position) {
+    public AlienProjectile(Vector2D position) {
         this.position = position;
-        this.image = new Image(new File("src/main/resources/shot.png").toURI().toString(), width, height, true, true);
+        this.image = new Image(new File("src/main/resources/bomb.png").toURI().toString(), width, height, true, true);
+    }
+
+    @Override
+    public void start() {
+
+    }
+
+    @Override
+    public void update() {
+        this.down();
     }
 
     @Override
     public void up() {
-        this.position.setY(this.position.getY() - speed);
+        return;
     }
 
     @Override
     public void down() {
-        return;
+        this.position.setY(this.position.getY() + speed);
     }
 
     @Override
@@ -49,37 +56,27 @@ public class PlayerProjectile extends Projectile {
 
     @Override
     public Image getImage() {
-        return this.image;
+        return image;
     }
 
     @Override
     public double getWidth() {
-        return this.width;
+        return width;
     }
 
     @Override
     public double getHeight() {
-        return this.height;
+        return height;
     }
 
     @Override
     public Vector2D getPosition() {
-        return this.position;
+        return position;
     }
 
     @Override
     public Layer getLayer() {
         return Layer.FOREGROUND;
-    }
-
-    @Override
-    public void start() {
-
-    }
-
-    @Override
-    public void update() {
-        this.up();
     }
 
     @Override
@@ -90,5 +87,10 @@ public class PlayerProjectile extends Projectile {
     @Override
     public double getSpeed() {
         return speed;
+    }
+
+
+    public void setStrategy(ProjectileStrategy strat) {
+        this.strategy = strat;
     }
 }

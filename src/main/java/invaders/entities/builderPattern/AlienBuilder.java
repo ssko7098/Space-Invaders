@@ -56,6 +56,6 @@ public class AlienBuilder implements BunkerEnemyBuilder{
     }
 
     public Alien build() {
-        return new Alien(position);
+        return new Alien(position, projectileStrategy);
     }
 }

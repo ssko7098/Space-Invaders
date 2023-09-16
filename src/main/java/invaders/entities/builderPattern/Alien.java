@@ -3,6 +3,10 @@ package invaders.entities.builderPattern;
 import invaders.ConfigReader;
 import invaders.GameObject;
 import invaders.entities.Direction;
+import invaders.entities.factoryMethod.*;
+import invaders.entities.strategy.FastStraightProjectileStrategy;
+import invaders.entities.strategy.ProjectileStrategy;
+import invaders.entities.strategy.SlowStraightProjectileStrategy;
 import invaders.logic.Damagable;
 import invaders.physics.Collider;
 import invaders.physics.Moveable;
@@ -11,6 +15,7 @@ import invaders.rendering.Renderable;
 import javafx.scene.image.Image;
 
 import java.io.File;
+import java.util.ArrayList;
 
 public class Alien implements Renderable, Collider, Moveable, Damagable, GameObject {
 
@@ -23,9 +28,19 @@ public class Alien implements Renderable, Collider, Moveable, Damagable, GameObj
     private Direction direction = Direction.RIGHT;
     private double speed = 0.2;
 
-    public Alien(Vector2D position) {
+    private ArrayList<Projectile> shots = new ArrayList<>();
+    private ProjectileStrategy strategy;
+
+    public Alien(Vector2D position, String strategy) {
         this.position = position;
         this.image = new Image(new File("src/main/resources/enemy.png").toURI().toString(), width, height, true, true);
+
+        if(strategy.equals("slow_straight")) {
+            this.strategy = new SlowStraightProjectileStrategy();
+        }
+        else if(strategy.equals("fast_straight")) {
+            this.strategy = new FastStraightProjectileStrategy();
+        }
     }
 
     @Override
@@ -99,16 +114,37 @@ public class Alien implements Renderable, Collider, Moveable, Damagable, GameObj
         this.direction = dir;
     }
 
-    public Direction getDirection() {
-        return direction;
-    }
-
     public void setSpeed(double speed) {
         this.speed = speed;
     }
 
     public double getSpeed() {
         return speed;
+    }
+
+    public ProjectileStrategy getStrategy() {
+        return strategy;
+    }
+
+    public void shoot() {
+        if (this.shots.isEmpty()) {
+            ProjectileFactory pFactory = new AlienProjectileFactory();
+            AlienProjectile projectile = (AlienProjectile) pFactory.make(this);
+
+            // Setting the speed as per the strategy
+            projectile.setStrategy(strategy);
+            strategy.setSpeed(projectile);
+
+            this.shots.add(projectile);
+        }
+    }
+
+    public boolean isBombExists() {
+        return !shots.isEmpty();
+    }
+
+    public Projectile getBomb() {
+        return shots.get(0);
     }
 
     @Override

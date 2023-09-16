@@ -16,7 +16,6 @@ public class AlienHorde implements GameObject {
     private boolean movingDown;
     private boolean rightWall;
     private boolean leftWall;
-
     public void addAlien(Renderable alien) {
         alienList.add( (Alien) alien);
     }
@@ -47,6 +46,9 @@ public class AlienHorde implements GameObject {
     @Override
     public void update() {
         for(Alien alien : alienList) {
+
+            alien.shoot();
+
             int gameSize = Integer.parseInt(config.getGameSize()[0].toString());
 
             if((alien.getPosition().getX() >= (gameSize - 1 - alien.getWidth())) && rightCount <= 1 && !movingDown) {

@@ -31,6 +31,7 @@ public class GameEngine {
 
 	private int laserCount = 0;
 	private AlienHorde alienHorde = new AlienHorde();
+	private int bombCount = 0;
 
 	public GameEngine(String config){
 		// read the config here
@@ -83,6 +84,15 @@ public class GameEngine {
 			collidables.add(player.getLaser());
 			laserCount = 1;
 		}
+
+//		for(Alien alien : alienHorde.getAlienHorde()) {
+//			if(bombCount < 3 && alien.isBombExists()) {
+//				renderables.add(alien.getBomb());
+//				gameobjects.add(alien.getBomb());
+//				collidables.add(alien.getBomb());
+//				bombCount ++;
+//			}
+//		}
 
 		for(int i=0; i<collidables.size(); i++) {
 			for(int x=0; x<collidables.size(); x++) {
@@ -188,8 +198,12 @@ public class GameEngine {
 	}
 
 	public boolean shootPressed(){
-		player.shoot();
-		return true;
+		if(!player.isLaserExists()) {
+			player.shoot();
+			return true;
+		}
+
+		return false;
 	}
 
 	private void movePlayer(){
