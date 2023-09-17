@@ -16,6 +16,8 @@ public class AlienHorde implements GameObject {
     private boolean movingDown;
     private boolean rightWall;
     private boolean leftWall;
+
+    private int count = 0;
     public void addAlien(Renderable alien) {
         alienList.add( (Alien) alien);
     }
@@ -47,7 +49,13 @@ public class AlienHorde implements GameObject {
     public void update() {
         for(Alien alien : alienList) {
 
-            alien.shoot();
+            if(count < 3) {
+                alien.shoot();
+            }
+
+            if(alien.isProjectileExists()) {
+                count ++;
+            }
 
             int gameSize = Integer.parseInt(config.getGameSize()[0].toString());
 

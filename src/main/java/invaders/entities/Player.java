@@ -21,7 +21,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Player implements Moveable, Damagable, Renderable, Collider {
+public class Player implements Moveable, Damagable, Renderable, Collider, Shootable {
 
     private final Vector2D position;
     private final Animator anim = null;
@@ -63,6 +63,10 @@ public class Player implements Moveable, Damagable, Renderable, Collider {
         this.lives -= 1;
     }
 
+    public void dieInstantly() {
+        this.lives = 0;
+    }
+
     @Override
     public double getHealth() {
         return this.lives;
@@ -93,6 +97,7 @@ public class Player implements Moveable, Damagable, Renderable, Collider {
         this.position.setX(this.position.getX() + speed);
     }
 
+    @Override
     public void shoot() {
         if (this.laser.isEmpty()) {
             ProjectileFactory pFactory = new PlayerProjectileFactory();
@@ -101,15 +106,18 @@ public class Player implements Moveable, Damagable, Renderable, Collider {
         }
     }
 
-    public boolean isLaserExists() {
+    @Override
+    public boolean isProjectileExists() {
         return !this.laser.isEmpty();
     }
 
-    public Projectile getLaser() {
+    @Override
+    public Projectile getProjectile() {
         return this.laser.get(0);
     }
 
-    public void removeLaser() {
+    @Override
+    public void removeProjectile() {
         this.laser.clear();
     }
 

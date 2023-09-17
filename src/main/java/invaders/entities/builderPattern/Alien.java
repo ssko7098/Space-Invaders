@@ -3,6 +3,7 @@ package invaders.entities.builderPattern;
 import invaders.ConfigReader;
 import invaders.GameObject;
 import invaders.entities.Direction;
+import invaders.entities.Shootable;
 import invaders.entities.factoryMethod.*;
 import invaders.entities.strategy.FastStraightProjectileStrategy;
 import invaders.entities.strategy.ProjectileStrategy;
@@ -17,7 +18,7 @@ import javafx.scene.image.Image;
 import java.io.File;
 import java.util.ArrayList;
 
-public class Alien implements Renderable, Collider, Moveable, Damagable, GameObject {
+public class Alien implements Renderable, Collider, Moveable, Damagable, GameObject, Shootable {
 
     private final Vector2D position;
     private final double height = 22;
@@ -126,6 +127,7 @@ public class Alien implements Renderable, Collider, Moveable, Damagable, GameObj
         return strategy;
     }
 
+    @Override
     public void shoot() {
         if (this.shots.isEmpty()) {
             ProjectileFactory pFactory = new AlienProjectileFactory();
@@ -139,12 +141,19 @@ public class Alien implements Renderable, Collider, Moveable, Damagable, GameObj
         }
     }
 
-    public boolean isBombExists() {
+    @Override
+    public boolean isProjectileExists() {
         return !shots.isEmpty();
     }
 
-    public Projectile getBomb() {
+    @Override
+    public Projectile getProjectile() {
         return shots.get(0);
+    }
+
+    @Override
+    public void removeProjectile() {
+        shots.clear();
     }
 
     @Override

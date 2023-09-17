@@ -76,7 +76,7 @@ public class AlienProjectile extends Projectile{
 
     @Override
     public Layer getLayer() {
-        return Layer.FOREGROUND;
+        return Layer.BACKGROUND;
     }
 
     @Override

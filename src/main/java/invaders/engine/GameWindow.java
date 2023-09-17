@@ -5,6 +5,10 @@ import java.util.ArrayList;
 
 import invaders.entities.EntityViewImpl;
 import invaders.entities.SpaceBackground;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
+import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.util.Duration;
 
 import invaders.entities.EntityView;
@@ -94,6 +98,18 @@ public class GameWindow {
             }
         }
         entityViews.removeIf(EntityView::isMarkedForDelete);
+
+        if(!model.getPlayer().isAlive()) {
+            model.getRenderables().clear();
+            Label label = new Label();
+            label.setText("GAME OVER");
+            label.setFont(new Font("Arial", 30));
+            label.setMinWidth(width);
+            label.setMinHeight(height);
+            label.setAlignment(Pos.CENTER);
+            label.setTextFill(Paint.valueOf("WHITE"));
+            pane.getChildren().add(label);
+        }
     }
 
 	public Scene getScene() {
