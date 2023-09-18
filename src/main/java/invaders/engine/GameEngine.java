@@ -131,6 +131,33 @@ public class GameEngine {
 
 					if(boxCollider.isColliding(colB)) {
 						//TODO Handle Collisions
+						for(int k=0; k< damagables.size(); k++) {
+							Damagable dam = damagables.get(k);
+							boolean notAlien = true;
+
+							for(int y=0; y<alienHorde.getAlienHorde().size(); y++) {
+								Renderable alien = alienHorde.getAlienHorde().get(y);
+
+								if(alien == dam && (alien == col || alien == colB)) {
+                                    notAlien = player.isProjectileExists() && (player.getProjectile() == col || player.getProjectile() == colB);
+
+									if(notAlien) {
+										alienHorde.removeAlien(alien);
+									}
+								}
+							}
+
+							if((dam.equals(col) || dam.equals(colB)) && notAlien) {
+								dam.takeDamage();
+							}
+
+							if(!dam.isAlive()) {
+								renderables.remove( (Renderable) dam);
+								collidables.remove( (Collider) dam);
+								damagables.remove(dam);
+							}
+						}
+
 						if(player.isProjectileExists() && (player.getProjectile() == col || player.getProjectile() == colB)) {
 							if(col == player.getProjectile()) {
 								renderables.remove(col);
@@ -143,26 +170,6 @@ public class GameEngine {
 
 							player.removeProjectile();
 							laserCount = 0;
-						}
-
-						for(Damagable dam: damagables) {
-
-							if(dam.equals(col) || dam.equals(colB)) {
-								dam.takeDamage();
-							}
-
-							for(int y=0; y<alienHorde.getAlienHorde().size(); y++) {
-								Renderable alien = alienHorde.getAlienHorde().get(y);
-
-								if(alien == dam && (alien == col || alien == colB)) {
-									alienHorde.removeAlien(alien);
-								}
-							}
-
-							if(!dam.isAlive()) {
-								renderables.remove( (Renderable) dam);
-								collidables.remove( (Collider) dam);
-							}
 						}
 					}
 				}
