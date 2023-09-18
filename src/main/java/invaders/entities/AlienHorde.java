@@ -6,6 +6,7 @@ import invaders.entities.builderPattern.Alien;
 import invaders.rendering.Renderable;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class AlienHorde implements GameObject {
 
@@ -17,7 +18,9 @@ public class AlienHorde implements GameObject {
     private boolean rightWall;
     private boolean leftWall;
 
+    private int bombCount = 0;
     private int count = 0;
+    private Random random = new Random();
     public void addAlien(Renderable alien) {
         alienList.add( (Alien) alien);
     }
@@ -47,14 +50,19 @@ public class AlienHorde implements GameObject {
 
     @Override
     public void update() {
+
+        for(Alien alien: alienList) {
+            if(alien.isProjectileExists()) {
+                bombCount ++;
+            }
+        }
+
         for(Alien alien : alienList) {
 
-            if(count < 3) {
-                alien.shoot();
-            }
-
-            if(alien.isProjectileExists()) {
-                count ++;
+            if(count < random.nextInt()) {
+                if(bombCount < 3) {
+                    alien.shoot();
+                }
             }
 
             int gameSize = Integer.parseInt(config.getGameSize()[0].toString());
@@ -95,5 +103,7 @@ public class AlienHorde implements GameObject {
         else if(movingDown && leftWall) {
             leftCount += 0.017;
         }
+
+        count ++;
     }
 }

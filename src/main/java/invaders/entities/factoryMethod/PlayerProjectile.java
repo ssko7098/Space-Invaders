@@ -21,6 +21,7 @@ public class PlayerProjectile extends Projectile {
     private final double height = 10;
     private double speed = 2;
     private ProjectileStrategy strategy;
+    private int lives = 1;
 
     public PlayerProjectile(Vector2D position) {
         this.position = position;
@@ -90,5 +91,20 @@ public class PlayerProjectile extends Projectile {
     @Override
     public double getSpeed() {
         return speed;
+    }
+
+    @Override
+    public void takeDamage() {
+        lives --;
+    }
+
+    @Override
+    public double getHealth() {
+        return lives;
+    }
+
+    @Override
+    public boolean isAlive() {
+        return lives > 0;
     }
 }

@@ -110,6 +110,17 @@ public class GameWindow {
             label.setTextFill(Paint.valueOf("WHITE"));
             pane.getChildren().add(label);
         }
+        else if(model.noMoreAliens()) {
+            model.getRenderables().clear();
+            Label label = new Label();
+            label.setText("PLAYER WINS!");
+            label.setFont(new Font("Arial", 30));
+            label.setMinWidth(width);
+            label.setMinHeight(height);
+            label.setAlignment(Pos.CENTER);
+            label.setTextFill(Paint.valueOf("WHITE"));
+            pane.getChildren().add(label);
+        }
     }
 
 	public Scene getScene() {

@@ -1,21 +1,23 @@
 package invaders.entities.factoryMethod;
 
 import invaders.entities.strategy.ProjectileStrategy;
+import invaders.logic.Damagable;
 import invaders.physics.Vector2D;
 import invaders.rendering.Animator;
 import javafx.scene.image.Image;
 
 import java.io.File;
 
-public class AlienProjectile extends Projectile{
+public class AlienProjectile extends Projectile implements Damagable {
 
     private final Vector2D position;
     private Image image;
     private final Animator anim = null;
 
     private final double width = 3;
-    private final double height = 9;
+    private final double height = 10;
     private double speed;
+    private int lives = 1;
 
     private ProjectileStrategy strategy;
 
@@ -76,7 +78,7 @@ public class AlienProjectile extends Projectile{
 
     @Override
     public Layer getLayer() {
-        return Layer.BACKGROUND;
+        return Layer.FOREGROUND;
     }
 
     @Override
@@ -92,5 +94,20 @@ public class AlienProjectile extends Projectile{
 
     public void setStrategy(ProjectileStrategy strat) {
         this.strategy = strat;
+    }
+
+    @Override
+    public void takeDamage() {
+        this.lives -= 1;
+    }
+
+    @Override
+    public double getHealth() {
+        return lives;
+    }
+
+    @Override
+    public boolean isAlive() {
+        return lives > 0;
     }
 }
