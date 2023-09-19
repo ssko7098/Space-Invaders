@@ -31,7 +31,7 @@ public class BunkerBuilder implements BunkerEnemyBuilder{
     }
 
     @Override
-    public BunkerBuilder addPosition(int index) {
+    public BunkerEnemyBuilder addPosition(int index) {
         JSONObject bunkers = (JSONObject) jsonBunkers.get(index);
         JSONObject position = (JSONObject) bunkers.get("position");
 
@@ -43,7 +43,7 @@ public class BunkerBuilder implements BunkerEnemyBuilder{
     }
 
     @Override
-    public BunkerBuilder addSize(int index) {
+    public BunkerEnemyBuilder addSize(int index) {
         JSONObject bunkers = (JSONObject) jsonBunkers.get(index);
         JSONObject position = (JSONObject) bunkers.get("size");
 
@@ -55,7 +55,7 @@ public class BunkerBuilder implements BunkerEnemyBuilder{
     }
 
     @Override
-    public BunkerBuilder addProjectileStrategy(int index) {
+    public BunkerEnemyBuilder addProjectileStrategy(int index) {
         return this;
     }
 

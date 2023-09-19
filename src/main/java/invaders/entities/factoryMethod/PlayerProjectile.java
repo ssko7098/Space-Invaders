@@ -1,13 +1,9 @@
 package invaders.entities.factoryMethod;
 
-import invaders.entities.EntityView;
 import invaders.entities.strategy.ProjectileStrategy;
+import invaders.entities.strategy.SlowStraightProjectileStrategy;
 import invaders.physics.Vector2D;
-import invaders.rendering.Animator;
-import invaders.rendering.Renderable;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import java.io.File;
 
@@ -15,13 +11,13 @@ public class PlayerProjectile extends Projectile {
 
     private final Vector2D position;
     private Image image;
-    private final Animator anim = null;
 
     private final double width = 3;
     private final double height = 10;
-    private double speed = 2;
-    private ProjectileStrategy strategy;
+    private double speed;
     private int lives = 1;
+
+    private ProjectileStrategy strategy;
 
     public PlayerProjectile(Vector2D position) {
         this.position = position;
@@ -94,12 +90,17 @@ public class PlayerProjectile extends Projectile {
     }
 
     @Override
+    public void setStrategy(ProjectileStrategy strat) {
+        this.strategy = strat;
+    }
+
+    @Override
     public void takeDamage() {
         lives --;
     }
 
     @Override
-    public double getHealth() {
+    public int getHealth() {
         return lives;
     }
 

@@ -47,13 +47,11 @@ public class Alien implements Renderable, Collider, Moveable, Damagable, GameObj
     @Override
     public void takeDamage() {
         lives -= 1;
-//        this.image.cancel();
-//        this.image = new Image(new File("src/main/resources/explosion.png").toURI().toString(), 12, 12, true, true);
     }
 
     @Override
-    public double getHealth() {
-        return 0;
+    public int getHealth() {
+        return lives;
     }
 
     @Override

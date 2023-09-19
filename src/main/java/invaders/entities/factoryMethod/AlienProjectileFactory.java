@@ -8,7 +8,7 @@ public class AlienProjectileFactory implements ProjectileFactory{
     @Override
     public Projectile make(Renderable entity) {
         Vector2D position = new Vector2D(entity.getPosition().getX() + entity.getWidth()/2,
-                entity.getPosition().getY() - entity.getHeight()/2);
+                entity.getPosition().getY() + entity.getHeight()/2);
 
         return new AlienProjectile(position);
     }

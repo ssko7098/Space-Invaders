@@ -1,13 +1,16 @@
 package invaders.entities;
 
+import invaders.ConfigReader;
 import invaders.entities.factoryMethod.PlayerProjectileFactory;
 import invaders.entities.factoryMethod.Projectile;
 import invaders.entities.factoryMethod.ProjectileFactory;
+import invaders.entities.strategy.FastStraightProjectileStrategy;
+import invaders.entities.strategy.ProjectileStrategy;
+import invaders.entities.strategy.SlowStraightProjectileStrategy;
 import invaders.logic.Damagable;
 import invaders.physics.Collider;
 import invaders.physics.Moveable;
 import invaders.physics.Vector2D;
-import invaders.rendering.Animator;
 import invaders.rendering.Renderable;
 
 import javafx.scene.image.Image;
@@ -24,8 +27,7 @@ import java.util.ArrayList;
 public class Player implements Moveable, Damagable, Renderable, Collider, Shootable {
 
     private final Vector2D position;
-    private final Animator anim = null;
-    private double lives;
+    private int lives;
     private final double speed;
 
     private final double width = 30;
@@ -33,29 +35,21 @@ public class Player implements Moveable, Damagable, Renderable, Collider, Shoota
     private final Image image;
 
     private ArrayList<Projectile> laser = new ArrayList<>();
+    private ProjectileStrategy strategy;
 
-    public Player(String path){
+    public Player(){
+        ConfigReader config = new ConfigReader();
+        JSONObject player = config.getPlayerObject();
 
-        JSONParser parser = new JSONParser();
+        Long x = (Long) ((JSONObject) player.get("position")).get("x");
+        Long y = (Long) ((JSONObject) player.get("position")).get("y");
 
-        try {
-            Object object = parser.parse(new FileReader(path));
-
-            JSONObject jsonObject = (JSONObject) object;
-
-            JSONObject jsonGame = (JSONObject) jsonObject.get("Player");
-
-            Long x = (Long) ((JSONObject) jsonGame.get("position")).get("x");
-            Long y = (Long) ((JSONObject) jsonGame.get("position")).get("y");
-
-            this.position = new Vector2D(x, y);
-            this.image = new Image(new File("src/main/resources/player.png").toURI().toString(), width, height, true, true);
-            this.lives = Double.parseDouble(jsonGame.get("lives").toString());
-            this.speed = Double.parseDouble(jsonGame.get("speed").toString());
-
-        } catch (IOException | ParseException e) {
-            throw new RuntimeException(e);
-        }
+        this.position = new Vector2D(x, y);
+        this.image = new Image(new File("src/main/resources/player.png").toURI().toString(), width, height, true, true);
+        this.lives = Integer.parseInt(player.get("lives").toString());
+        this.speed = Double.parseDouble(player.get("speed").toString());
+//        this.strategy = new SlowStraightProjectileStrategy();
+        this.strategy = new FastStraightProjectileStrategy();
     }
 
     @Override
@@ -68,7 +62,7 @@ public class Player implements Moveable, Damagable, Renderable, Collider, Shoota
     }
 
     @Override
-    public double getHealth() {
+    public int getHealth() {
         return this.lives;
     }
 
@@ -102,6 +96,10 @@ public class Player implements Moveable, Damagable, Renderable, Collider, Shoota
         if (this.laser.isEmpty()) {
             ProjectileFactory pFactory = new PlayerProjectileFactory();
             Projectile projectile = pFactory.make(this);
+
+            // Setting the speed as per the strategy
+            projectile.setStrategy(strategy);
+            strategy.setSpeed(projectile);
             this.laser.add(projectile);
         }
     }

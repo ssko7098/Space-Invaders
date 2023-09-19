@@ -63,7 +63,7 @@ public class Bunker implements Renderable, Collider, Damagable {
     }
 
     @Override
-    public double getHealth() {
+    public int getHealth() {
         return lives;
     }
 

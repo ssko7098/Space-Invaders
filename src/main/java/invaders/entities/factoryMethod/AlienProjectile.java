@@ -3,7 +3,6 @@ package invaders.entities.factoryMethod;
 import invaders.entities.strategy.ProjectileStrategy;
 import invaders.logic.Damagable;
 import invaders.physics.Vector2D;
-import invaders.rendering.Animator;
 import javafx.scene.image.Image;
 
 import java.io.File;
@@ -12,7 +11,6 @@ public class AlienProjectile extends Projectile implements Damagable {
 
     private final Vector2D position;
     private Image image;
-    private final Animator anim = null;
 
     private final double width = 3;
     private final double height = 10;
@@ -91,7 +89,7 @@ public class AlienProjectile extends Projectile implements Damagable {
         return speed;
     }
 
-
+    @Override
     public void setStrategy(ProjectileStrategy strat) {
         this.strategy = strat;
     }
@@ -102,7 +100,7 @@ public class AlienProjectile extends Projectile implements Damagable {
     }
 
     @Override
-    public double getHealth() {
+    public int getHealth() {
         return lives;
     }
 

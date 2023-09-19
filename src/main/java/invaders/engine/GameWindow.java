@@ -2,11 +2,14 @@ package invaders.engine;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Timer;
 
 import invaders.entities.EntityViewImpl;
 import invaders.entities.SpaceBackground;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
@@ -16,7 +19,6 @@ import invaders.rendering.Renderable;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 
 public class GameWindow {
 	private final int width;
@@ -48,7 +50,6 @@ public class GameWindow {
         scene.setOnKeyReleased(keyboardInputHandler::handleReleased);
 
         entityViews = new ArrayList<EntityView>();
-
     }
 
 	public void run() {

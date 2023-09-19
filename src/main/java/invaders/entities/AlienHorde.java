@@ -18,9 +18,6 @@ public class AlienHorde implements GameObject {
     private boolean rightWall;
     private boolean leftWall;
 
-    private int bombCount = 0;
-    private int count = 0;
-    private Random random = new Random();
     public void addAlien(Renderable alien) {
         alienList.add( (Alien) alien);
     }
@@ -50,20 +47,8 @@ public class AlienHorde implements GameObject {
 
     @Override
     public void update() {
-
-        for(Alien alien: alienList) {
-            if(alien.isProjectileExists()) {
-                bombCount ++;
-            }
-        }
-
-        for(Alien alien : alienList) {
-
-            if(count < random.nextInt()) {
-                if(bombCount < 3) {
-                    alien.shoot();
-                }
-            }
+        for(int i=0; i<alienList.size(); i++) {
+            Alien alien = alienList.get(i);
 
             int gameSize = Integer.parseInt(config.getGameSize()[0].toString());
 
@@ -103,7 +88,5 @@ public class AlienHorde implements GameObject {
         else if(movingDown && leftWall) {
             leftCount += 0.017;
         }
-
-        count ++;
     }
 }

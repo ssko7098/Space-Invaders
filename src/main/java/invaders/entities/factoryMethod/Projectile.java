@@ -14,4 +14,6 @@ public abstract class Projectile implements Moveable, Renderable, GameObject, Co
 
     public abstract double getSpeed();
 
+    public abstract void setStrategy(ProjectileStrategy strat);
+
 }

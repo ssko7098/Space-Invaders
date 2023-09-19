@@ -4,7 +4,7 @@ public interface Damagable {
 
 	public void takeDamage();
 
-	public double getHealth();
+	public int getHealth();
 
 	public boolean isAlive();
 
