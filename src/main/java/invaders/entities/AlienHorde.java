@@ -41,11 +41,6 @@ public class AlienHorde implements GameObject {
     }
 
     @Override
-    public void start() {
-
-    }
-
-    @Override
     public void update() {
         for(int i=0; i<alienList.size(); i++) {
             Alien alien = alienList.get(i);

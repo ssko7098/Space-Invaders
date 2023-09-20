@@ -25,11 +25,6 @@ public class AlienProjectile extends Projectile implements Damagable {
     }
 
     @Override
-    public void start() {
-
-    }
-
-    @Override
     public void update() {
         this.down();
     }

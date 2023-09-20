@@ -104,11 +104,6 @@ public class Alien implements Renderable, Collider, Moveable, Damagable, GameObj
         return Layer.FOREGROUND;
     }
 
-    @Override
-    public void start() {
-
-    }
-
     public void setDirection(Direction dir) {
         this.direction = dir;
     }

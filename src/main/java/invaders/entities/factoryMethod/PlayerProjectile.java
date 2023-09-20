@@ -70,11 +70,6 @@ public class PlayerProjectile extends Projectile {
     }
 
     @Override
-    public void start() {
-
-    }
-
-    @Override
     public void update() {
         this.up();
     }
