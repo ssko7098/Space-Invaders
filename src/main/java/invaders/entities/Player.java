@@ -13,7 +13,9 @@ import invaders.physics.Moveable;
 import invaders.physics.Vector2D;
 import invaders.rendering.Renderable;
 
+import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -32,6 +34,7 @@ public class Player implements Moveable, Damagable, Renderable, Collider, Shoota
 
     private final double width = 30;
     private final double height = 30;
+    private final String colour;
     private final Image image;
 
     private ArrayList<Projectile> laser = new ArrayList<>();
@@ -45,7 +48,8 @@ public class Player implements Moveable, Damagable, Renderable, Collider, Shoota
         Long y = (Long) ((JSONObject) player.get("position")).get("y");
 
         this.position = new Vector2D(x, y);
-        this.image = new Image(new File("src/main/resources/player.png").toURI().toString(), width, height, true, true);
+        this.colour = player.get("colour").toString();
+        this.image = new Image(new File("src/main/resources/" + colour.toLowerCase() + "Player.png").toURI().toString(), width, height, true, true);
         this.lives = Integer.parseInt(player.get("lives").toString());
         this.speed = Double.parseDouble(player.get("speed").toString());
 //        this.strategy = new SlowStraightProjectileStrategy();
