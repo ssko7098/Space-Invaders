@@ -10,7 +10,7 @@ public class RedState implements BunkerState{
         this.bunker = bunker;
     }
     @Override
-    public void loseLife() {
+    public void takeDamage() {
         return;
     }
 }

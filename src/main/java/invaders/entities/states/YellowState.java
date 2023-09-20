@@ -14,7 +14,7 @@ public class YellowState implements BunkerState{
     }
 
     @Override
-    public void loseLife() {
+    public void takeDamage() {
         bunker.changeState(new RedState(bunker));
         bunker.setImage(new Image(new File("src/main/resources/redBunker.png").toURI().toString(),
                 bunker.getWidth(), bunker.getHeight(), true, true));

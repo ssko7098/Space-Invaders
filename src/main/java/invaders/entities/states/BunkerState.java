@@ -4,6 +4,6 @@ import invaders.entities.builderPattern.Bunker;
 
 public interface BunkerState {
 
-    void loseLife();
+    void takeDamage();
 
 }
