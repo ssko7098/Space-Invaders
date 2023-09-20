@@ -213,10 +213,6 @@ public class GameEngine {
 								renderables.remove( (Renderable) dam);
 								collidables.remove( (Collider) dam);
 								damagables.remove(dam);
-
-								if(dam instanceof GameObject) {
-									gameobjects.remove(dam);
-								}
 							}
 						}
 					}
@@ -251,25 +247,6 @@ public class GameEngine {
 				ro.getPosition().setY(1);
 			}
 		}
-
-//		for(Renderable test: renderables) {
-//			boolean found = false;
-//			for(Shootable alien: alienHorde.getAlienHorde()) {
-//				if(alien.isProjectileExists() && alien.getProjectile() == test) {
-//					found = true;
-//				}
-//			}
-//
-//			if(!found && test instanceof Shootable && player.isProjectileExists() && test != player.getProjectile()) {
-//				if(test.getHeight() >= height - 1) {
-//					gameobjects.remove((GameObject) test);
-//					damagables.remove((Damagable) test);
-//					collidables.remove((Collider) test);
-//					renderables.remove(test);
-//					bombCount -= 1;
-//				}
-//			}
-//		}
 	}
 
 	public List<Renderable> getRenderables(){
