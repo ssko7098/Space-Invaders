@@ -9,8 +9,7 @@ import invaders.GameObject;
 import invaders.entities.AlienHorde;
 import invaders.entities.Player;
 import invaders.entities.Shootable;
-import invaders.entities.builderPattern.AlienBuilder;
-import invaders.entities.builderPattern.BunkerBuilder;
+import invaders.entities.builderPattern.*;
 import invaders.logic.Damagable;
 import invaders.physics.BoxCollider;
 import invaders.physics.Collider;
@@ -52,10 +51,9 @@ public class GameEngine {
 		damagables = new ArrayList<>();
 
 		for(int i=0; i<configReader.getNumOfBunkers(); i++) {
-			Renderable bunker = new BunkerBuilder()
-					.addPosition(i)
-					.addSize(i)
-					.build();
+			BunkerEnemyBuilder builder = new BunkerBuilder();
+			Director director = new Director();
+			Renderable bunker = director.buildBunker(builder, i);
 
 			renderables.add(bunker);
 			collidables.add( (Collider) bunker);
@@ -63,10 +61,9 @@ public class GameEngine {
 		}
 
 		for(int x=0; x< configReader.getNumOfAliens(); x++) {
-			Renderable alien = new AlienBuilder()
-					.addPosition(x)
-					.addProjectileStrategy(x)
-					.build();
+			BunkerEnemyBuilder builder = new AlienBuilder();
+			Director director = new Director();
+			Renderable alien = director.buildAlien(builder, x);
 
 			renderables.add(alien);
 			gameobjects.add( (GameObject) alien);
@@ -88,6 +85,8 @@ public class GameEngine {
 	 */
 	public void update(){
 		movePlayer();
+
+		//TODO fix bug where the alien's projectile hits edge of screen after alien is killed.
 
 		if(player.isProjectileExists() && laserCount == 0) {
 			renderables.add(player.getProjectile());
