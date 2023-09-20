@@ -36,7 +36,7 @@ public class AlienHorde implements GameObject {
         alienList.remove( (Alien) alien);
 
         for(Alien alienB: alienList) {
-            alienB.setSpeed(alienB.getSpeed() + 0.04);
+            alienB.setSpeed(alienB.getSpeed() + 0.08);
         }
     }
 
