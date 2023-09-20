@@ -24,7 +24,7 @@ public class Bunker implements Renderable, Collider, Damagable {
         this.width = size.getX();
         this.height = size.getY();
         this.image = new Image(new File("src/main/resources/bunker.png").toURI().toString(), width, height, true, true);
-        this.state = new GreenState();
+        this.state = new GreenState(this);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class Bunker implements Renderable, Collider, Damagable {
 
     @Override
     public void takeDamage() {
-        this.state.changeState(this);
+        this.state.loseLife();
         lives -= 1;
     }
 

@@ -7,9 +7,15 @@ import java.io.File;
 
 public class YellowState implements BunkerState{
 
+    private Bunker bunker;
+
+    public YellowState(Bunker bunker) {
+        this.bunker = bunker;
+    }
+
     @Override
-    public void changeState(Bunker bunker) {
-        bunker.changeState(new RedState());
+    public void loseLife() {
+        bunker.changeState(new RedState(bunker));
         bunker.setImage(new Image(new File("src/main/resources/redBunker.png").toURI().toString(),
                 bunker.getWidth(), bunker.getHeight(), true, true));
     }
