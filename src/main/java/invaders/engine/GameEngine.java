@@ -50,10 +50,12 @@ public class GameEngine {
 		collidables = new ArrayList<>();
 		damagables = new ArrayList<>();
 
+		Director director = new Director();
+		BunkerEnemyBuilder bunkerBuilder = new BunkerBuilder();
+		BunkerEnemyBuilder alienBuilder = new AlienBuilder();
+
 		for(int i=0; i<configReader.getNumOfBunkers(); i++) {
-			BunkerEnemyBuilder builder = new BunkerBuilder();
-			Director director = new Director();
-			Renderable bunker = director.buildBunker(builder, i);
+			Renderable bunker = director.buildBunker(bunkerBuilder, i);
 
 			renderables.add(bunker);
 			collidables.add( (Collider) bunker);
@@ -61,9 +63,7 @@ public class GameEngine {
 		}
 
 		for(int x=0; x< configReader.getNumOfAliens(); x++) {
-			BunkerEnemyBuilder builder = new AlienBuilder();
-			Director director = new Director();
-			Renderable alien = director.buildAlien(builder, x);
+			Renderable alien = director.buildAlien(alienBuilder, x);
 
 			renderables.add(alien);
 			gameobjects.add( (GameObject) alien);
