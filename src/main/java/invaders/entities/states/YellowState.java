@@ -13,11 +13,16 @@ public class YellowState implements BunkerState{
         this.bunker = bunker;
     }
 
+    /**
+     * This class is responsible for causing the state of the bunker to
+     * change to the colour red
+     */
     @Override
     public void takeDamage() {
         bunker.changeState(new RedState(bunker));
         bunker.setImage(new Image(new File("src/main/resources/redBunker.png").toURI().toString(),
                 bunker.getWidth(), bunker.getHeight(), true, true));
+        bunker.setHealth(bunker.getHealth() - 1);
     }
 
 }

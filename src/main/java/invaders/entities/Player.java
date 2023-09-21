@@ -36,12 +36,13 @@ public class Player implements Moveable, Damagable, Renderable, Collider, Shoota
     private final double height = 30;
     private final String colour;
     private final Image image;
+    private final ConfigReader config;
 
     private ArrayList<Projectile> laser = new ArrayList<>();
     private ProjectileStrategy strategy;
 
     public Player(){
-        ConfigReader config = new ConfigReader();
+        this.config = new ConfigReader();
         JSONObject player = config.getPlayerObject();
 
         Long x = (Long) ((JSONObject) player.get("position")).get("x");
@@ -52,13 +53,19 @@ public class Player implements Moveable, Damagable, Renderable, Collider, Shoota
         this.image = new Image(new File("src/main/resources/" + colour.toLowerCase() + "Player.png").toURI().toString(), width, height, true, true);
         this.lives = Integer.parseInt(player.get("lives").toString());
         this.speed = Double.parseDouble(player.get("speed").toString());
-//        this.strategy = new SlowStraightProjectileStrategy();
+        //this.strategy = new SlowStraightProjectileStrategy();
         this.strategy = new FastStraightProjectileStrategy();
     }
 
     @Override
     public void takeDamage() {
         this.lives -= 1;
+
+        JSONObject player = config.getPlayerObject();
+        Long x = (Long) ((JSONObject) player.get("position")).get("x");
+        Long y = (Long) ((JSONObject) player.get("position")).get("y");
+        this.position.setX(x);
+        this.position.setY(y);
     }
 
     public void dieInstantly() {

@@ -1,7 +1,5 @@
 package invaders.physics;
 
-import invaders.rendering.Renderable;
-
 public interface Collider {
 
     public double getWidth();

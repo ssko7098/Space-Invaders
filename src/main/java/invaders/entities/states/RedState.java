@@ -9,8 +9,12 @@ public class RedState implements BunkerState{
     public RedState(Bunker bunker) {
         this.bunker = bunker;
     }
+
+    /**
+     * This class is responsible for destroying the bunker object
+     */
     @Override
     public void takeDamage() {
-        return;
+        bunker.setHealth(bunker.getHealth() - 1);
     }
 }

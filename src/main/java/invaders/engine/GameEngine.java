@@ -84,8 +84,6 @@ public class GameEngine {
 	public void update(){
 		movePlayer();
 
-		//TODO fix bug where the alien's projectile hits edge of screen after alien is killed.
-
 		if(player.isProjectileExists() && laserCount == 0) {
 			renderables.add(player.getProjectile());
 			gameobjects.add(player.getProjectile());

@@ -116,10 +116,6 @@ public class Alien implements Renderable, Collider, Moveable, Damagable, GameObj
         return speed;
     }
 
-    public ProjectileStrategy getStrategy() {
-        return strategy;
-    }
-
     @Override
     public void shoot() {
         if (this.shots.isEmpty()) {

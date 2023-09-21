@@ -4,6 +4,9 @@ import invaders.rendering.Renderable;
 
 public class PlayerProjectileFactory implements ProjectileFactory{
 
+    /**
+     * This class is responsible for creating new Player Projectile objects
+     */
     @Override
     public Projectile make(Renderable entity) {
         Vector2D position = new Vector2D(entity.getPosition().getX() + entity.getWidth()/2,

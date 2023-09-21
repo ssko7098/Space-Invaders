@@ -80,11 +80,6 @@ public class AlienProjectile extends Projectile implements Damagable {
     }
 
     @Override
-    public double getSpeed() {
-        return speed;
-    }
-
-    @Override
     public void setStrategy(ProjectileStrategy strat) {
         this.strategy = strat;
     }

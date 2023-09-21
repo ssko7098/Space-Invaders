@@ -16,6 +16,10 @@ public class BunkerBuilder implements BunkerEnemyBuilder{
     private Vector2D position;
     private Vector2D size;
 
+    /**
+     * This class reads all the relevant alien information from the config file
+     * and is responsible for building the Bunker object
+     */
     public BunkerBuilder() {
         JSONParser parser = new JSONParser();
 

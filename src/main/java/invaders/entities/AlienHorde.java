@@ -18,6 +18,10 @@ public class AlienHorde implements GameObject {
     private boolean rightWall;
     private boolean leftWall;
 
+    /**
+     * This class is responsible for controlling the
+     * @param alien
+     */
     public void addAlien(Renderable alien) {
         alienList.add( (Alien) alien);
     }

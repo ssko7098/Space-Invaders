@@ -59,7 +59,10 @@ public class Bunker implements Renderable, Collider, Damagable {
     @Override
     public void takeDamage() {
         this.state.takeDamage();
-        lives -= 1;
+    }
+
+    public void setHealth(int life) {
+        this.lives = life;
     }
 
     @Override
