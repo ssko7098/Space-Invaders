@@ -6,6 +6,7 @@ import java.util.Random;
 
 import invaders.ConfigReader;
 import invaders.GameObject;
+import invaders.entities.AlienController;
 import invaders.entities.AlienHorde;
 import invaders.entities.Player;
 import invaders.entities.Shootable;
@@ -25,7 +26,7 @@ public class GameEngine {
 	private List<Collider> collidables;
 	private List<Damagable> damagables;
 	private Player player;
-	private AlienHorde alienHorde = new AlienHorde();
+	private AlienController alienHorde = new AlienHorde();
 	private Random random = new Random();
 
 	private boolean left;
@@ -144,75 +145,8 @@ public class GameEngine {
 					BoxCollider boxCollider = new BoxCollider(col.getWidth(), col.getHeight(), col.getPosition());
 					if(boxCollider.isColliding(colB)) {
 
-						for(Shootable alien: alienHorde.getAlienHorde()) {
-							if(alien.isProjectileExists() && alien.getProjectile() == col
-									&& player.isProjectileExists() && player.getProjectile() == colB) {
-								gameobjects.remove((GameObject) col);
-								gameobjects.remove((GameObject) colB);
-								renderables.remove( (Renderable) col);
-								renderables.remove( (Renderable) colB);
-								collidables.remove(col);
-								collidables.remove(colB);
-								damagables.remove((Damagable) col);
-								damagables.remove((Damagable) colB);
-								player.removeProjectile();
-								alien.removeProjectile();
-								bombCount --;
-								laserCount = 0;
-							}
-						}
+						handleCollision(col, colB);
 
-						for(int k=0; k< damagables.size(); k++) {
-							Damagable dam = damagables.get(k);
-
-							boolean collides = true;
-							for(int y=0; y<alienHorde.getAlienHorde().size(); y++) {
-								Renderable alien = alienHorde.getAlienHorde().get(y);
-
-								if(alien == dam && (alien == col || alien == colB)) {
-                                    collides = player.isProjectileExists() && (player.getProjectile() == col || player.getProjectile() == colB);
-
-									if(collides) {
-										alienHorde.removeAlien(alien);
-									}
-								}
-							}
-
-							if((dam.equals(col) || dam.equals(colB)) && collides) {
-								boolean bombCollidesWithAlien = false;
-
-								for(Shootable alien: alienHorde.getAlienHorde()) {
-									for(Shootable alienB: alienHorde.getAlienHorde()) {
-										if((alien.isProjectileExists() && alien.getProjectile() == dam && alienB == col) ||
-											(alienB.isProjectileExists() && alienB.getProjectile() == dam && alien == colB)) {
-											bombCollidesWithAlien = true;
-										}
-									}
-								}
-
-								if(!bombCollidesWithAlien) {
-									dam.takeDamage();
-								}
-
-								if(player.isProjectileExists() && dam == player.getProjectile()) {
-									player.removeProjectile();
-									laserCount = 0;
-								}
-
-								for(Shootable alien: alienHorde.getAlienHorde()) {
-									if(alien.isProjectileExists() && dam == alien.getProjectile() && !bombCollidesWithAlien) {
-										alien.removeProjectile();
-										bombCount -= 1;
-									}
-								}
-							}
-
-							if(!dam.isAlive()) {
-								renderables.remove( (Renderable) dam);
-								collidables.remove( (Collider) dam);
-								damagables.remove(dam);
-							}
-						}
 					}
 				}
 			}
@@ -301,5 +235,77 @@ public class GameEngine {
 
 	public boolean noMoreAliens() {
 		return alienHorde.getAlienHorde().isEmpty();
+	}
+
+	public void handleCollision(Collider col, Collider colB) {
+		for(Shootable alien: alienHorde.getAlienHorde()) {
+			if(alien.isProjectileExists() && alien.getProjectile() == col
+					&& player.isProjectileExists() && player.getProjectile() == colB) {
+				gameobjects.remove((GameObject) col);
+				gameobjects.remove((GameObject) colB);
+				renderables.remove( (Renderable) col);
+				renderables.remove( (Renderable) colB);
+				collidables.remove(col);
+				collidables.remove(colB);
+				damagables.remove((Damagable) col);
+				damagables.remove((Damagable) colB);
+				player.removeProjectile();
+				alien.removeProjectile();
+				bombCount --;
+				laserCount = 0;
+			}
+		}
+
+		for(int k=0; k< damagables.size(); k++) {
+			Damagable dam = damagables.get(k);
+
+			boolean collides = true;
+			for(int y=0; y<alienHorde.getAlienHorde().size(); y++) {
+				Renderable alien = alienHorde.getAlienHorde().get(y);
+
+				if(alien == dam && (alien == col || alien == colB)) {
+					collides = player.isProjectileExists() && (player.getProjectile() == col || player.getProjectile() == colB);
+
+					if(collides) {
+						alienHorde.removeAlien(alien);
+					}
+				}
+			}
+
+			if((dam.equals(col) || dam.equals(colB)) && collides) {
+				boolean bombCollidesWithAlien = false;
+
+				for(Shootable alien: alienHorde.getAlienHorde()) {
+					for(Shootable alienB: alienHorde.getAlienHorde()) {
+						if((alien.isProjectileExists() && alien.getProjectile() == dam && alienB == col) ||
+								(alienB.isProjectileExists() && alienB.getProjectile() == dam && alien == colB)) {
+							bombCollidesWithAlien = true;
+						}
+					}
+				}
+
+				if(!bombCollidesWithAlien) {
+					dam.takeDamage();
+				}
+
+				if(player.isProjectileExists() && dam == player.getProjectile()) {
+					player.removeProjectile();
+					laserCount = 0;
+				}
+
+				for(Shootable alien: alienHorde.getAlienHorde()) {
+					if(alien.isProjectileExists() && dam == alien.getProjectile() && !bombCollidesWithAlien) {
+						alien.removeProjectile();
+						bombCount -= 1;
+					}
+				}
+			}
+
+			if(!dam.isAlive()) {
+				renderables.remove( (Renderable) dam);
+				collidables.remove( (Collider) dam);
+				damagables.remove(dam);
+			}
+		}
 	}
 }

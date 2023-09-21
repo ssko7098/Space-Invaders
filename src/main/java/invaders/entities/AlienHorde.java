@@ -6,9 +6,8 @@ import invaders.entities.builderPattern.Alien;
 import invaders.rendering.Renderable;
 
 import java.util.ArrayList;
-import java.util.Random;
 
-public class AlienHorde implements GameObject {
+public class AlienHorde implements AlienController {
 
     private ArrayList<Alien> alienList = new ArrayList<>();
     private ConfigReader config = new ConfigReader();
@@ -19,8 +18,8 @@ public class AlienHorde implements GameObject {
     private boolean leftWall;
 
     /**
-     * This class is responsible for controlling the
-     * @param alien
+     * This class is responsible for controlling the aliens
+     * @param alien: Alien object to be controlled by this class
      */
     public void addAlien(Renderable alien) {
         alienList.add( (Alien) alien);
