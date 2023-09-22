@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import invaders.physics.Vector2D;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -29,6 +30,14 @@ public class ConfigReader {
 	public JSONObject getPlayerObject() {
 		return (JSONObject) object.get("Player");
     }
+
+	public Vector2D getPlayerStart() {
+		JSONObject player = (JSONObject) object.get("Player");
+		Long x = (Long) ((JSONObject) player.get("position")).get("x");
+		Long y = (Long) ((JSONObject) player.get("position")).get("y");
+
+		return new Vector2D(x, y);
+	}
 
 	public Long[] getGameSize() {
 		Long[] size = new Long[2];

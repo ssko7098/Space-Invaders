@@ -1,5 +1,6 @@
 package invaders.entities.builderPattern;
 
+import invaders.entities.Entity;
 import invaders.rendering.Renderable;
 
 public class Director {

@@ -14,6 +14,6 @@ public interface AlienController extends GameObject {
 
     void removeAlien(Renderable alien);
 
-    ArrayList<Alien> getAlienHorde();
+    ArrayList<Shootable> getAlienHorde();
 
 }

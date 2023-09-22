@@ -1,5 +1,6 @@
 package invaders.entities.builderPattern;
 
+import invaders.entities.Entity;
 import invaders.physics.Vector2D;
 import invaders.rendering.Renderable;
 

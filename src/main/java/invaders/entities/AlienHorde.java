@@ -31,8 +31,8 @@ public class AlienHorde implements AlienController {
         }
     }
 
-    public ArrayList<Alien> getAlienHorde() {
-        return alienList;
+    public ArrayList<Shootable> getAlienHorde() {
+        return new ArrayList<>(alienList);
     }
 
     public void removeAlien(Renderable alien) {

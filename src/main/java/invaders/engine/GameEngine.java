@@ -6,10 +6,7 @@ import java.util.Random;
 
 import invaders.ConfigReader;
 import invaders.GameObject;
-import invaders.entities.AlienController;
-import invaders.entities.AlienHorde;
-import invaders.entities.Player;
-import invaders.entities.Shootable;
+import invaders.entities.*;
 import invaders.entities.builderPattern.*;
 import invaders.logic.Damagable;
 import invaders.physics.BoxCollider;
@@ -25,7 +22,7 @@ public class GameEngine {
 	private List<Renderable> renderables;
 	private List<Collider> collidables;
 	private List<Damagable> damagables;
-	private Player player;
+	private Entity player;
 	private AlienController alienHorde = new AlienHorde();
 	private Random random = new Random();
 
@@ -64,16 +61,16 @@ public class GameEngine {
 		}
 
 		for(int x=0; x< configReader.getNumOfAliens(); x++) {
-			Renderable alien = director.buildAlien(alienBuilder, x);
+			Entity alien = (Alien) director.buildAlien(alienBuilder, x);
 
 			renderables.add(alien);
-			gameobjects.add( (GameObject) alien);
+			gameobjects.add(alien);
 			alienHorde.addAlien(alien);
-			collidables.add( (Collider) alien);
-			damagables.add( (Damagable) alien);
+			collidables.add(alien);
+			damagables.add(alien);
 		}
 
-		player = new Player();
+		player = new Player(configReader.getPlayerStart());
 		renderables.add(player);
 		collidables.add(player);
 		damagables.add(player);
@@ -91,6 +88,15 @@ public class GameEngine {
 			collidables.add(player.getProjectile());
 			damagables.add(player.getProjectile());
 			laserCount = 1;
+		}
+
+		if(player.isProjectileExists() && player.getProjectile().getPosition().getY() <= 1) {
+			renderables.remove(player.getProjectile());
+			gameobjects.remove(player.getProjectile());
+			collidables.remove(player.getProjectile());
+
+			player.removeProjectile();
+			laserCount = 0;
 		}
 
 		for(int j=0; j<alienHorde.getAlienHorde().size(); j++) {
@@ -119,7 +125,7 @@ public class GameEngine {
 			if(alien.getPosition().getY() >= player.getPosition().getY() ||
 					(alien.getPosition().getX() == player.getPosition().getX() &&
 					alien.getPosition().getY() == player.getPosition().getY())) {
-				player.dieInstantly();
+				player.setLives(0);
 			}
 		}
 
@@ -218,18 +224,9 @@ public class GameEngine {
 		if(right){
 			player.right();
 		}
-
-		if(player.isProjectileExists() && player.getProjectile().getPosition().getY() <= 1) {
-			renderables.remove(player.getProjectile());
-			gameobjects.remove(player.getProjectile());
-			collidables.remove(player.getProjectile());
-
-			player.removeProjectile();
-			laserCount = 0;
-		}
 	}
 
-	public Player getPlayer() {
+	public Entity getPlayer() {
 		return player;
 	}
 

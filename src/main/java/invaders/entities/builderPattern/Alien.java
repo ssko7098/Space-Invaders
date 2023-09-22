@@ -3,6 +3,7 @@ package invaders.entities.builderPattern;
 import invaders.ConfigReader;
 import invaders.GameObject;
 import invaders.entities.Direction;
+import invaders.entities.Entity;
 import invaders.entities.Shootable;
 import invaders.entities.factoryMethod.*;
 import invaders.entities.strategy.FastStraightProjectileStrategy;
@@ -18,45 +19,29 @@ import javafx.scene.image.Image;
 import java.io.File;
 import java.util.ArrayList;
 
-public class Alien implements Renderable, Collider, Moveable, Damagable, GameObject, Shootable {
+public class Alien extends Entity implements Renderable, Collider, Moveable, Damagable, GameObject, Shootable {
 
-    private final Vector2D position;
-    private final double height = 22;
-    private final double width = 31;
-    private Image image;
-    private int lives = 1;
-    private ConfigReader config = new ConfigReader();
     private Direction direction = Direction.RIGHT;
     private double speed = 0.2;
 
-    private ArrayList<Projectile> shots = new ArrayList<>();
-    private ProjectileStrategy strategy;
-
     public Alien(Vector2D position, String strategy) {
-        this.position = position;
-        this.image = new Image(new File("src/main/resources/enemy.png").toURI().toString(), width, height, true, true);
+        super(position);
+        super.image = new Image(new File("src/main/resources/enemy.png").toURI().toString(), width, height, true, true);
+        super.lives = 1;
+        super.height = 22;
+        super.width = 31;
 
         if(strategy.equals("slow_straight")) {
-            this.strategy = new SlowStraightProjectileStrategy();
+            super.strategy = new SlowStraightProjectileStrategy();
         }
         else if(strategy.equals("fast_straight")) {
-            this.strategy = new FastStraightProjectileStrategy();
+            super.strategy = new FastStraightProjectileStrategy();
         }
     }
 
     @Override
     public void takeDamage() {
         lives -= 1;
-    }
-
-    @Override
-    public int getHealth() {
-        return lives;
-    }
-
-    @Override
-    public boolean isAlive() {
-        return lives > 0;
     }
 
     @Override
@@ -79,31 +64,6 @@ public class Alien implements Renderable, Collider, Moveable, Damagable, GameObj
         this.getPosition().setX(getPosition().getX() + speed);
     }
 
-    @Override
-    public Image getImage() {
-        return image;
-    }
-
-    @Override
-    public double getWidth() {
-        return width;
-    }
-
-    @Override
-    public double getHeight() {
-        return height;
-    }
-
-    @Override
-    public Vector2D getPosition() {
-        return position;
-    }
-
-    @Override
-    public Layer getLayer() {
-        return Layer.FOREGROUND;
-    }
-
     public void setDirection(Direction dir) {
         this.direction = dir;
     }
@@ -118,31 +78,16 @@ public class Alien implements Renderable, Collider, Moveable, Damagable, GameObj
 
     @Override
     public void shoot() {
-        if (this.shots.isEmpty()) {
+        if (this.projectiles.isEmpty()) {
             ProjectileFactory pFactory = new AlienProjectileFactory();
             AlienProjectile projectile = (AlienProjectile) pFactory.make(this);
 
             // Setting the speed as per the strategy
-            projectile.setStrategy(strategy);
-            strategy.setSpeed(projectile);
+            projectile.setStrategy(super.strategy);
+            super.strategy.setSpeed(projectile);
 
-            this.shots.add(projectile);
+            super.projectiles.add(projectile);
         }
-    }
-
-    @Override
-    public boolean isProjectileExists() {
-        return !shots.isEmpty();
-    }
-
-    @Override
-    public Projectile getProjectile() {
-        return shots.get(0);
-    }
-
-    @Override
-    public void removeProjectile() {
-        shots.clear();
     }
 
     @Override

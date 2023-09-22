@@ -26,35 +26,24 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Player implements Moveable, Damagable, Renderable, Collider, Shootable {
+public class Player extends Entity implements Moveable, Damagable, Renderable, Collider, Shootable {
 
-    private final Vector2D position;
-    private int lives;
-    private final double speed;
-
-    private final double width = 30;
-    private final double height = 30;
     private final String colour;
-    private final Image image;
-    private final ConfigReader config;
+    private final ConfigReader config = new ConfigReader();
 
-    private ArrayList<Projectile> laser = new ArrayList<>();
-    private ProjectileStrategy strategy;
+    public Player(Vector2D position){
+        super(position);
 
-    public Player(){
-        this.config = new ConfigReader();
         JSONObject player = config.getPlayerObject();
 
-        Long x = (Long) ((JSONObject) player.get("position")).get("x");
-        Long y = (Long) ((JSONObject) player.get("position")).get("y");
-
-        this.position = new Vector2D(x, y);
         this.colour = player.get("colour").toString();
-        this.image = new Image(new File("src/main/resources/" + colour.toLowerCase() + "Player.png").toURI().toString(), width, height, true, true);
-        this.lives = Integer.parseInt(player.get("lives").toString());
-        this.speed = Double.parseDouble(player.get("speed").toString());
+        super.image = new Image(new File("src/main/resources/" + colour.toLowerCase() + "Player.png").toURI().toString(), width, height, true, true);
+        super.lives = Integer.parseInt(player.get("lives").toString());
+        super.speed = Double.parseDouble(player.get("speed").toString());
+        super.height = 30;
+        super.width = 30;
         //this.strategy = new SlowStraightProjectileStrategy();
-        this.strategy = new FastStraightProjectileStrategy();
+        super.strategy = new FastStraightProjectileStrategy();
     }
 
     @Override
@@ -66,20 +55,6 @@ public class Player implements Moveable, Damagable, Renderable, Collider, Shoota
         Long y = (Long) ((JSONObject) player.get("position")).get("y");
         this.position.setX(x);
         this.position.setY(y);
-    }
-
-    public void dieInstantly() {
-        this.lives = 0;
-    }
-
-    @Override
-    public int getHealth() {
-        return this.lives;
-    }
-
-    @Override
-    public boolean isAlive() {
-        return this.lives > 0;
     }
 
     @Override
@@ -104,55 +79,19 @@ public class Player implements Moveable, Damagable, Renderable, Collider, Shoota
 
     @Override
     public void shoot() {
-        if (this.laser.isEmpty()) {
+        if (this.projectiles.isEmpty()) {
             ProjectileFactory pFactory = new PlayerProjectileFactory();
             Projectile projectile = pFactory.make(this);
 
             // Setting the speed as per the strategy
-            projectile.setStrategy(strategy);
-            strategy.setSpeed(projectile);
-            this.laser.add(projectile);
+            projectile.setStrategy(super.strategy);
+            super.strategy.setSpeed(projectile);
+            super.projectiles.add(projectile);
         }
     }
 
     @Override
-    public boolean isProjectileExists() {
-        return !this.laser.isEmpty();
+    public void update() {
+        return;
     }
-
-    @Override
-    public Projectile getProjectile() {
-        return this.laser.get(0);
-    }
-
-    @Override
-    public void removeProjectile() {
-        this.laser.clear();
-    }
-
-    @Override
-    public Image getImage() {
-        return this.image;
-    }
-
-    @Override
-    public double getWidth() {
-        return width;
-    }
-
-    @Override
-    public double getHeight() {
-        return height;
-    }
-
-    @Override
-    public Vector2D getPosition() {
-        return position;
-    }
-
-    @Override
-    public Layer getLayer() {
-        return Layer.FOREGROUND;
-    }
-
 }
