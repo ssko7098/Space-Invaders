@@ -86,8 +86,8 @@ public abstract class Entity implements Renderable, Damagable, Shootable, Moveab
         return Layer.FOREGROUND;
     }
 
-    public void setLives(int health) {
-        this.lives = health;
+    public void dieInstantly() {
+        this.lives = 0;
     }
 
 }

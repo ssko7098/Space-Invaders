@@ -125,7 +125,7 @@ public class GameEngine {
 			if(alien.getPosition().getY() >= player.getPosition().getY() ||
 					(alien.getPosition().getX() == player.getPosition().getX() &&
 					alien.getPosition().getY() == player.getPosition().getY())) {
-				player.setLives(0);
+				player.dieInstantly();
 			}
 		}
 
