@@ -10,7 +10,7 @@ import invaders.physics.Vector2D;
 import invaders.rendering.Renderable;
 import javafx.scene.image.Image;
 
-public abstract class Projectile implements Moveable, Renderable, GameObject, Collider, Damagable {
+public abstract class Projectile implements Moveable, GameObject, Collider, Damagable {
 
     protected final Vector2D position;
     protected Image image;

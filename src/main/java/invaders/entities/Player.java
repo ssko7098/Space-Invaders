@@ -5,28 +5,17 @@ import invaders.entities.factoryMethod.PlayerProjectileFactory;
 import invaders.entities.factoryMethod.Projectile;
 import invaders.entities.factoryMethod.ProjectileFactory;
 import invaders.entities.strategy.FastStraightProjectileStrategy;
-import invaders.entities.strategy.ProjectileStrategy;
 import invaders.entities.strategy.SlowStraightProjectileStrategy;
 import invaders.logic.Damagable;
 import invaders.physics.Collider;
 import invaders.physics.Moveable;
 import invaders.physics.Vector2D;
 import invaders.rendering.Renderable;
-
-import javafx.scene.effect.ColorAdjust;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-import java.awt.*;
 import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
 
-public class Player extends Entity implements Moveable, Damagable, Renderable, Collider, Shootable {
+public class Player extends Entity {
 
     private final String colour;
     private final ConfigReader config = new ConfigReader();
@@ -40,10 +29,8 @@ public class Player extends Entity implements Moveable, Damagable, Renderable, C
         super.image = new Image(new File("src/main/resources/" + colour.toLowerCase() + "Player.png").toURI().toString(), width, height, true, true);
         super.lives = Integer.parseInt(player.get("lives").toString());
         super.speed = Double.parseDouble(player.get("speed").toString());
-        super.height = 30;
-        super.width = 30;
-        //this.strategy = new SlowStraightProjectileStrategy();
-        super.strategy = new FastStraightProjectileStrategy();
+        super.strategy = new SlowStraightProjectileStrategy();
+//        super.strategy = new FastStraightProjectileStrategy();
     }
 
     @Override

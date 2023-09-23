@@ -22,7 +22,6 @@ class KeyboardInputHandler {
     KeyboardInputHandler(GameEngine model) {
         this.model = model;
 
-        // TODO (longGoneUser): Is there a better place for this code?
         URL mediaUrl = getClass().getResource("/shoot.wav");
         String jumpURL = mediaUrl.toExternalForm();
 

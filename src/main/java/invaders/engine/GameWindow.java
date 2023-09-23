@@ -2,15 +2,13 @@ package invaders.engine;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Timer;
 
 import invaders.entities.EntityViewImpl;
-import invaders.entities.SpaceBackground;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.util.Duration;
 
@@ -27,13 +25,10 @@ public class GameWindow {
     private Pane pane;
     private GameEngine model;
     private List<EntityView> entityViews;
-    private Renderable background;
 
     private double xViewportOffset = 0.0;
     private double yViewportOffset = 0.0;
     private static final double VIEWPORT_MARGIN = 280.0;
-
-    public double count = 0;
 
 	public GameWindow(GameEngine model, int width, int height){
 
@@ -42,14 +37,19 @@ public class GameWindow {
         this.model = model;
         pane = new Pane();
         scene = new Scene(pane, width, height);
-        this.background = new SpaceBackground(model, pane);
+
+        Rectangle background = new Rectangle(0, 0, width, height);
+        background.setFill(Paint.valueOf("BLACK"));
+        background.setViewOrder(1000.0);
+
+        pane.getChildren().add(background);
 
         KeyboardInputHandler keyboardInputHandler = new KeyboardInputHandler(this.model);
 
         scene.setOnKeyPressed(keyboardInputHandler::handlePressed);
         scene.setOnKeyReleased(keyboardInputHandler::handleReleased);
 
-        entityViews = new ArrayList<EntityView>();
+        entityViews = new ArrayList<>();
     }
 
 	public void run() {

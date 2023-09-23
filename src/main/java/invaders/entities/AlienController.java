@@ -6,7 +6,7 @@ import invaders.rendering.Renderable;
 
 import java.util.ArrayList;
 
-public interface AlienController extends GameObject {
+public interface AlienController {
 
     void addAlien(Renderable alien);
 
@@ -15,5 +15,7 @@ public interface AlienController extends GameObject {
     void removeAlien(Renderable alien);
 
     ArrayList<Shootable> getAlienHorde();
+
+    void update();
 
 }

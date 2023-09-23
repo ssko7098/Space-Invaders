@@ -8,12 +8,11 @@ import invaders.logic.Damagable;
 import invaders.physics.Collider;
 import invaders.physics.Moveable;
 import invaders.physics.Vector2D;
-import invaders.rendering.Renderable;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
-public abstract class Entity implements Renderable, Damagable, Shootable, Moveable, Collider, GameObject {
+public abstract class Entity implements Damagable, Shootable, Moveable, Collider, GameObject {
 
     protected final Vector2D position;
     protected int lives;

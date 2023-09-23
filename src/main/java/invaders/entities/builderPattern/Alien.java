@@ -19,7 +19,7 @@ import javafx.scene.image.Image;
 import java.io.File;
 import java.util.ArrayList;
 
-public class Alien extends Entity implements Renderable, Collider, Moveable, Damagable, GameObject, Shootable {
+public class Alien extends Entity {
 
     private Direction direction = Direction.RIGHT;
     private double speed = 0.2;
@@ -80,7 +80,7 @@ public class Alien extends Entity implements Renderable, Collider, Moveable, Dam
     public void shoot() {
         if (this.projectiles.isEmpty()) {
             ProjectileFactory pFactory = new AlienProjectileFactory();
-            AlienProjectile projectile = (AlienProjectile) pFactory.make(this);
+            Projectile projectile = pFactory.make(this);
 
             // Setting the speed as per the strategy
             projectile.setStrategy(super.strategy);

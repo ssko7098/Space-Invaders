@@ -10,7 +10,7 @@ public class FastStraightProjectileStrategy implements ProjectileStrategy{
      */
     @Override
     public void setSpeed(Projectile proj) {
-        proj.setSpeed(3);
+        proj.setSpeed(4);
     }
 
 }

@@ -1,6 +1,8 @@
 package invaders.logic;
 
-public interface Damagable {
+import invaders.rendering.Renderable;
+
+public interface Damagable extends Renderable {
 
 	public void takeDamage();
 

@@ -21,25 +21,29 @@ public class AlienHorde implements AlienController {
      * This class is responsible for controlling the aliens
      * @param alien: Alien object to be controlled by this class
      */
+    @Override
     public void addAlien(Renderable alien) {
         alienList.add( (Alien) alien);
     }
 
+    @Override
     public void setDirectionForAll(Direction dir) {
         for(Alien alien: alienList) {
             alien.setDirection(dir);
         }
     }
 
+    @Override
     public ArrayList<Shootable> getAlienHorde() {
         return new ArrayList<>(alienList);
     }
 
+    @Override
     public void removeAlien(Renderable alien) {
         alienList.remove( (Alien) alien);
 
         for(Alien alienB: alienList) {
-            alienB.setSpeed(alienB.getSpeed() + 0.08);
+            alienB.setSpeed(alienB.getSpeed() + 0.07);
         }
     }
 

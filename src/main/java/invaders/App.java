@@ -22,7 +22,7 @@ public class App extends Application {
         int width = Integer.parseInt(config.getGameSize()[0].toString());
         int height = Integer.parseInt(config.getGameSize()[1].toString());
 
-        GameEngine model = new GameEngine("src/main/resources/config.json");
+        GameEngine model = new GameEngine();
         GameWindow window = new GameWindow(model, width, height);
         window.run();
 

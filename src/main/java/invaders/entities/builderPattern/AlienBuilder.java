@@ -1,5 +1,6 @@
 package invaders.entities.builderPattern;
 
+import invaders.entities.Entity;
 import invaders.physics.Vector2D;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -9,7 +10,7 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class AlienBuilder implements BunkerEnemyBuilder{
+public class AlienBuilder implements AlienBuilderInterface {
 
     private final String path = "src/main/resources/config.json";
     private JSONArray jsonEnemies;
@@ -35,7 +36,7 @@ public class AlienBuilder implements BunkerEnemyBuilder{
     }
 
     @Override
-    public BunkerEnemyBuilder addPosition(int index) {
+    public AlienBuilderInterface addPosition(int index) {
         JSONObject enemies = (JSONObject) jsonEnemies.get(index);
         JSONObject position = (JSONObject) enemies.get("position");
 
@@ -47,12 +48,7 @@ public class AlienBuilder implements BunkerEnemyBuilder{
     }
 
     @Override
-    public BunkerEnemyBuilder addSize(int index) {
-        return null;
-    }
-
-    @Override
-    public BunkerEnemyBuilder addProjectileStrategy(int index) {
+    public AlienBuilderInterface addProjectileStrategy(int index) {
         JSONObject enemies = (JSONObject) jsonEnemies.get(index);
 
         this.projectileStrategy = enemies.get("projectile").toString();

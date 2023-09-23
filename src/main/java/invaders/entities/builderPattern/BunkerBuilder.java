@@ -9,7 +9,7 @@ import org.json.simple.parser.ParseException;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class BunkerBuilder implements BunkerEnemyBuilder{
+public class BunkerBuilder implements BunkerBuilderInterface {
 
     private final String path = "src/main/resources/config.json";
     private JSONArray jsonBunkers;
@@ -35,7 +35,7 @@ public class BunkerBuilder implements BunkerEnemyBuilder{
     }
 
     @Override
-    public BunkerEnemyBuilder addPosition(int index) {
+    public BunkerBuilderInterface addPosition(int index) {
         JSONObject bunkers = (JSONObject) jsonBunkers.get(index);
         JSONObject position = (JSONObject) bunkers.get("position");
 
@@ -47,7 +47,7 @@ public class BunkerBuilder implements BunkerEnemyBuilder{
     }
 
     @Override
-    public BunkerEnemyBuilder addSize(int index) {
+    public BunkerBuilderInterface addSize(int index) {
         JSONObject bunkers = (JSONObject) jsonBunkers.get(index);
         JSONObject position = (JSONObject) bunkers.get("size");
 
@@ -55,11 +55,6 @@ public class BunkerBuilder implements BunkerEnemyBuilder{
         double y = Double.parseDouble(position.get("y").toString());
 
         this.size = new Vector2D(x, y);
-        return this;
-    }
-
-    @Override
-    public BunkerEnemyBuilder addProjectileStrategy(int index) {
         return this;
     }
 

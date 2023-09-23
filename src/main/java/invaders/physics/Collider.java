@@ -1,5 +1,7 @@
 package invaders.physics;
 
+import invaders.rendering.Renderable;
+
 public interface Collider {
 
     public double getWidth();
@@ -8,7 +10,7 @@ public interface Collider {
 
     public Vector2D getPosition();
 
-    public default boolean isColliding(Collider col) {
+    public default boolean isColliding(Renderable col) {
         double minX1 = this.getPosition().getX();
         double maxX1 = this.getPosition().getX() + this.getWidth();
         double minY1 = this.getPosition().getY();
