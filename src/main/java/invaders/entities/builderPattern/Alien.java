@@ -13,7 +13,7 @@ import java.io.File;
 public class Alien extends Entity {
 
     private Direction direction = Direction.RIGHT;
-    private double speed = 0.2;
+    private double speed = 0.3;
 
     public Alien(Vector2D position, String strategy) {
         super(position);
