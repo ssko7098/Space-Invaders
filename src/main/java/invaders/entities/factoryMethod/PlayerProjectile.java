@@ -12,7 +12,7 @@ public class PlayerProjectile extends Projectile {
 
     public PlayerProjectile(Vector2D position) {
         super(position);
-        super.image = new Image(new File("src/main/resources/shot.png").toURI().toString(), width, height, false, true);
+        super.image = new Image(new File("src/main/resources/shot.png").toURI().toString(), width, height, true, true);
     }
 
     @Override

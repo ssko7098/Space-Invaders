@@ -4,7 +4,13 @@ import invaders.entities.Entity;
 
 public class AlienDirector {
 
-    public Entity buildAlien(AlienBuilderInterface builder, int index) {
+    private AlienBuilderInterface builder;
+
+    public AlienDirector(AlienBuilderInterface builder) {
+        this.builder = builder;
+    }
+
+    public Entity build(int index) {
         builder.addProjectileStrategy(index)
                 .addPosition(index);
 

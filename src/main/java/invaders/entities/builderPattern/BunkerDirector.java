@@ -4,7 +4,13 @@ import invaders.logic.Damagable;
 
 public class BunkerDirector {
 
-    public Damagable buildBunker(BunkerBuilderInterface builder, int index) {
+    private BunkerBuilderInterface builder;
+
+    public BunkerDirector(BunkerBuilderInterface builder) {
+        this.builder = builder;
+    }
+
+    public Damagable build(int index) {
         builder.addSize(index)
                 .addPosition(index);
 

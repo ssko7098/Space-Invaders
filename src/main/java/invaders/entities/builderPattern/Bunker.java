@@ -10,7 +10,7 @@ import javafx.scene.image.Image;
 
 import java.io.File;
 
-public class Bunker implements Renderable, Collider, Damagable {
+public class Bunker implements Collider, Damagable {
 
     private final Vector2D position;
     private final double height;
@@ -23,7 +23,7 @@ public class Bunker implements Renderable, Collider, Damagable {
         this.position = position;
         this.width = size.getX();
         this.height = size.getY();
-        this.image = new Image(new File("src/main/resources/bunker.png").toURI().toString(), width, height, true, true);
+        this.image = new Image(new File("src/main/resources/bunker.png").toURI().toString(), width, height, false, true);
         this.state = new GreenState(this);
     }
 

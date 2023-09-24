@@ -1,23 +1,14 @@
 package invaders.entities.builderPattern;
 
-import invaders.ConfigReader;
-import invaders.GameObject;
+
 import invaders.entities.Direction;
 import invaders.entities.Entity;
-import invaders.entities.Shootable;
 import invaders.entities.factoryMethod.*;
 import invaders.entities.strategy.FastStraightProjectileStrategy;
-import invaders.entities.strategy.ProjectileStrategy;
 import invaders.entities.strategy.SlowStraightProjectileStrategy;
-import invaders.logic.Damagable;
-import invaders.physics.Collider;
-import invaders.physics.Moveable;
 import invaders.physics.Vector2D;
-import invaders.rendering.Renderable;
 import javafx.scene.image.Image;
-
 import java.io.File;
-import java.util.ArrayList;
 
 public class Alien extends Entity {
 

@@ -101,7 +101,7 @@ public class GameWindow {
         entityViews.removeIf(EntityView::isMarkedForDelete);
 
         if(!model.getPlayer().isAlive()) {
-            model.getRenderables().clear();
+            model.stop();
             Label label = new Label();
             label.setText("GAME OVER");
             label.setFont(new Font("Arial", 30));
@@ -112,7 +112,7 @@ public class GameWindow {
             pane.getChildren().add(label);
         }
         else if(model.noMoreAliens()) {
-            model.getRenderables().clear();
+            model.stop();
             Label label = new Label();
             label.setText("PLAYER WINS!");
             label.setFont(new Font("Arial", 30));

@@ -1,6 +1,6 @@
 package invaders.entities.builderPattern;
 
-import invaders.entities.Entity;
+import invaders.ConfigReader;
 import invaders.physics.Vector2D;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class AlienBuilder implements AlienBuilderInterface {
 
-    private final String path = "src/main/resources/config.json";
+    private ConfigReader config = new ConfigReader();
     private JSONArray jsonEnemies;
     private Vector2D position;
     private String projectileStrategy;
@@ -22,17 +22,7 @@ public class AlienBuilder implements AlienBuilderInterface {
      * and is responsible for building the Alien object
      */
     public AlienBuilder() {
-        JSONParser parser = new JSONParser();
-
-        try {
-            Object object = parser.parse(new FileReader(path));
-            JSONObject jsonObject = (JSONObject) object;
-            JSONArray jsonEnemies = (JSONArray) jsonObject.get("Enemies");
-            this.jsonEnemies = jsonEnemies;
-
-        } catch (IOException | ParseException e) {
-            throw new RuntimeException(e);
-        }
+        this.jsonEnemies = config.getAlienObjects();
     }
 
     @Override

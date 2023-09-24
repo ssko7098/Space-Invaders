@@ -1,9 +1,6 @@
 package invaders.entities;
 
-import invaders.GameObject;
-import invaders.entities.builderPattern.Alien;
 import invaders.rendering.Renderable;
-
 import java.util.ArrayList;
 
 public interface AlienController {

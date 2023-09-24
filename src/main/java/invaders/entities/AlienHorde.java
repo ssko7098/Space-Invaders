@@ -1,7 +1,6 @@
 package invaders.entities;
 
 import invaders.ConfigReader;
-import invaders.GameObject;
 import invaders.entities.builderPattern.Alien;
 import invaders.rendering.Renderable;
 

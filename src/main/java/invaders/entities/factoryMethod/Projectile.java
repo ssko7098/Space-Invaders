@@ -71,6 +71,7 @@ public abstract class Projectile implements Moveable, GameObject, Collider, Dama
 
     public void setStrategy(ProjectileStrategy strat) {
         this.strategy = strat;
+        this.strategy.setSpeed(this);
     }
 
 }

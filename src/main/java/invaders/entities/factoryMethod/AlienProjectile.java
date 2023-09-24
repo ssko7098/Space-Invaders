@@ -1,6 +1,8 @@
 package invaders.entities.factoryMethod;
 
+import invaders.entities.strategy.FastStraightProjectileStrategy;
 import invaders.entities.strategy.ProjectileStrategy;
+import invaders.entities.strategy.SlowStraightProjectileStrategy;
 import invaders.logic.Damagable;
 import invaders.physics.Vector2D;
 import javafx.scene.image.Image;
@@ -11,7 +13,7 @@ public class AlienProjectile extends Projectile {
 
     public AlienProjectile(Vector2D position) {
         super(position);
-        super.image = new Image(new File("src/main/resources/bomb.png").toURI().toString(), width, height, false, true);
+        super.image = new Image(new File("src/main/resources/bomb.png").toURI().toString(), width, height, true, true);
     }
 
     @Override

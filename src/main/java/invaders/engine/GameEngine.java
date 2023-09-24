@@ -10,6 +10,7 @@ import invaders.entities.*;
 import invaders.entities.builderPattern.*;
 import invaders.logic.Damagable;
 import invaders.physics.BoxCollider;
+import invaders.physics.Collider;
 import invaders.rendering.Renderable;
 
 /**
@@ -45,20 +46,18 @@ public class GameEngine {
 		renderables = new ArrayList<>();
 		damagables = new ArrayList<>();
 
-		AlienDirector alienDirector = new AlienDirector();
-		BunkerDirector bunkerDirector = new BunkerDirector();
-		BunkerBuilderInterface bunkerBuilder = new BunkerBuilder();
-		AlienBuilderInterface alienBuilder = new AlienBuilder();
+		AlienDirector alienDirector = new AlienDirector(new AlienBuilder());
+		BunkerDirector bunkerDirector = new BunkerDirector(new BunkerBuilder());
 
 		for(int i=0; i<configReader.getNumOfBunkers(); i++) {
-			Damagable bunker = bunkerDirector.buildBunker(bunkerBuilder, i);
+			Damagable bunker = bunkerDirector.build(i);
 
 			renderables.add(bunker);
 			damagables.add(bunker);
 		}
 
 		for(int x=0; x< configReader.getNumOfAliens(); x++) {
-			Entity alien = alienDirector.buildAlien(alienBuilder, x);
+			Entity alien = alienDirector.build(x);
 
 			renderables.add(alien);
 			gameobjects.add(alien);
@@ -136,7 +135,7 @@ public class GameEngine {
 				Renderable colB = renderables.get(x);
 
 				if(!col.equals(colB)) {
-					BoxCollider boxCollider = new BoxCollider(col.getWidth(), col.getHeight(), col.getPosition());
+					Collider boxCollider = new BoxCollider(col.getWidth(), col.getHeight(), col.getPosition());
 					if(boxCollider.isColliding(colB)) {
 
 						handleCollision(col, colB);
@@ -291,5 +290,12 @@ public class GameEngine {
 				damagables.remove(dam);
 			}
 		}
+	}
+
+	public void stop() {
+		renderables.clear();
+		alienHorde.getAlienHorde().clear();
+		gameobjects.clear();
+		damagables.clear();
 	}
 }

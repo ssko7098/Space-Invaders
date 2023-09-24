@@ -1,5 +1,6 @@
 package invaders.entities.builderPattern;
 
+import invaders.ConfigReader;
 import invaders.physics.Vector2D;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -11,27 +12,17 @@ import java.io.IOException;
 
 public class BunkerBuilder implements BunkerBuilderInterface {
 
-    private final String path = "src/main/resources/config.json";
+    private ConfigReader config = new ConfigReader();
     private JSONArray jsonBunkers;
     private Vector2D position;
     private Vector2D size;
 
     /**
-     * This class reads all the relevant alien information from the config file
+     * This class reads all the relevant bunker information from the config file
      * and is responsible for building the Bunker object
      */
     public BunkerBuilder() {
-        JSONParser parser = new JSONParser();
-
-        try {
-            Object object = parser.parse(new FileReader(path));
-            JSONObject jsonObject = (JSONObject) object;
-            JSONArray jsonBunkers = (JSONArray) jsonObject.get("Bunkers");
-            this.jsonBunkers = jsonBunkers;
-
-        } catch (IOException | ParseException e) {
-            throw new RuntimeException(e);
-        }
+        this.jsonBunkers = config.getBunkerObjects();
     }
 
     @Override

@@ -1,7 +1,5 @@
 package invaders;
 
-
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -30,6 +28,14 @@ public class ConfigReader {
 	public JSONObject getPlayerObject() {
 		return (JSONObject) object.get("Player");
     }
+
+	public JSONArray getBunkerObjects() {
+		return (JSONArray) object.get("Bunkers");
+	}
+
+	public JSONArray getAlienObjects() {
+		return (JSONArray) object.get("Enemies");
+	}
 
 	public Vector2D getPlayerStart() {
 		JSONObject player = (JSONObject) object.get("Player");

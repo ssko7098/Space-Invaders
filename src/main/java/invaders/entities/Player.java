@@ -4,13 +4,8 @@ import invaders.ConfigReader;
 import invaders.entities.factoryMethod.PlayerProjectileFactory;
 import invaders.entities.factoryMethod.Projectile;
 import invaders.entities.factoryMethod.ProjectileFactory;
-import invaders.entities.strategy.FastStraightProjectileStrategy;
 import invaders.entities.strategy.SlowStraightProjectileStrategy;
-import invaders.logic.Damagable;
-import invaders.physics.Collider;
-import invaders.physics.Moveable;
 import invaders.physics.Vector2D;
-import invaders.rendering.Renderable;
 import javafx.scene.image.Image;
 import org.json.simple.JSONObject;
 import java.io.File;
@@ -30,7 +25,6 @@ public class Player extends Entity {
         super.lives = Integer.parseInt(player.get("lives").toString());
         super.speed = Double.parseDouble(player.get("speed").toString());
         super.strategy = new SlowStraightProjectileStrategy();
-//        super.strategy = new FastStraightProjectileStrategy();
     }
 
     @Override
@@ -72,7 +66,6 @@ public class Player extends Entity {
 
             // Setting the speed as per the strategy
             projectile.setStrategy(super.strategy);
-            super.strategy.setSpeed(projectile);
             super.projectiles.add(projectile);
         }
     }
