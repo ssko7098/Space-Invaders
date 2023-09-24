@@ -9,6 +9,9 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+/**
+ * A utility class for reading objects from the config file
+ */
 public class ConfigReader {
 
 	private final String path = "src/main/resources/config.json";

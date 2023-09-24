@@ -10,6 +10,10 @@ import javafx.scene.image.Image;
 import org.json.simple.JSONObject;
 import java.io.File;
 
+/**
+ * This class represents the Player object
+ * which is controlled via the arrow keys
+ */
 public class Player extends Entity {
 
     private final String colour;

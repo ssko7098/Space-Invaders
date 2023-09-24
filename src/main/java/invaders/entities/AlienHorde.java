@@ -6,6 +6,9 @@ import invaders.rendering.Renderable;
 
 import java.util.ArrayList;
 
+/**
+ * This class is responsible for controlling the aliens
+ */
 public class AlienHorde implements AlienController {
 
     private ArrayList<Alien> alienList = new ArrayList<>();
@@ -16,10 +19,6 @@ public class AlienHorde implements AlienController {
     private boolean rightWall;
     private boolean leftWall;
 
-    /**
-     * This class is responsible for controlling the aliens
-     * @param alien: Alien object to be controlled by this class
-     */
     @Override
     public void addAlien(Renderable alien) {
         alienList.add( (Alien) alien);

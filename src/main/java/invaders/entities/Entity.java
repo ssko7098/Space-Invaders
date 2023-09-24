@@ -12,6 +12,10 @@ import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
+/**
+ * This abstract class represents all Entity objects
+ * extending it (Player or Aliens)
+ */
 public abstract class Entity implements Damagable, Shootable, Moveable, Collider, GameObject {
 
     protected final Vector2D position;

@@ -6,7 +6,7 @@
     }
   },
   "Player": {
-    "colour": "blue",
+    "colour": "green",
     "speed": 1,
     "lives": 3,
     "position": {

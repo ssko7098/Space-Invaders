@@ -1,9 +1,5 @@
 package invaders.entities.factoryMethod;
 
-import invaders.entities.strategy.FastStraightProjectileStrategy;
-import invaders.entities.strategy.ProjectileStrategy;
-import invaders.entities.strategy.SlowStraightProjectileStrategy;
-import invaders.logic.Damagable;
 import invaders.physics.Vector2D;
 import javafx.scene.image.Image;
 

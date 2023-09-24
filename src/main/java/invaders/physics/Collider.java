@@ -2,6 +2,10 @@ package invaders.physics;
 
 import invaders.rendering.Renderable;
 
+/**
+ * This interface is implemented by all objects
+ * which are capable of colliding together.
+ */
 public interface Collider {
 
     public double getWidth();

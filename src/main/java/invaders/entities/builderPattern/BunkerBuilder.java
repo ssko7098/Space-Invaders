@@ -4,12 +4,11 @@ import invaders.ConfigReader;
 import invaders.physics.Vector2D;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.FileReader;
-import java.io.IOException;
-
+/**
+ * This class reads all the relevant bunker information from the config file
+ * and is responsible for building the Bunker object
+ */
 public class BunkerBuilder implements BunkerBuilderInterface {
 
     private ConfigReader config = new ConfigReader();
@@ -17,10 +16,6 @@ public class BunkerBuilder implements BunkerBuilderInterface {
     private Vector2D position;
     private Vector2D size;
 
-    /**
-     * This class reads all the relevant bunker information from the config file
-     * and is responsible for building the Bunker object
-     */
     public BunkerBuilder() {
         this.jsonBunkers = config.getBunkerObjects();
     }

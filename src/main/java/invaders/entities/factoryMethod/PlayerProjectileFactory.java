@@ -1,13 +1,13 @@
 package invaders.entities.factoryMethod;
+
 import invaders.entities.Entity;
 import invaders.physics.Vector2D;
-import invaders.rendering.Renderable;
 
+/**
+ * This class is responsible for creating new Player Projectile objects
+ */
 public class PlayerProjectileFactory implements ProjectileFactory{
 
-    /**
-     * This class is responsible for creating new Player Projectile objects
-     */
     @Override
     public Projectile make(Entity entity) {
         Vector2D position = new Vector2D(entity.getPosition().getX() + entity.getWidth()/2,

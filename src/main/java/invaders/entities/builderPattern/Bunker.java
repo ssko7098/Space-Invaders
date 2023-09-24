@@ -5,7 +5,6 @@ import invaders.entities.states.*;
 import invaders.logic.Damagable;
 import invaders.physics.Collider;
 import invaders.physics.Vector2D;
-import invaders.rendering.Renderable;
 import javafx.scene.image.Image;
 
 import java.io.File;

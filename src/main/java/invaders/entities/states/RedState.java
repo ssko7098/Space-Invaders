@@ -2,6 +2,9 @@ package invaders.entities.states;
 
 import invaders.entities.builderPattern.Bunker;
 
+/**
+ * This class is responsible for destroying the bunker object
+ */
 public class RedState implements BunkerState{
 
     private Bunker bunker;
@@ -10,9 +13,6 @@ public class RedState implements BunkerState{
         this.bunker = bunker;
     }
 
-    /**
-     * This class is responsible for destroying the bunker object
-     */
     @Override
     public void takeDamage() {
         bunker.setHealth(bunker.getHealth() - 1);

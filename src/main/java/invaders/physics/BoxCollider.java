@@ -1,5 +1,9 @@
 package invaders.physics;
 
+/**
+ * This class is used to check collisions between objects
+ * based on a 'box' check of their width and height.
+ */
 public class BoxCollider implements Collider {
 
     private double width;

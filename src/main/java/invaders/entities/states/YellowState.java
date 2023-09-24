@@ -5,6 +5,10 @@ import javafx.scene.image.Image;
 
 import java.io.File;
 
+/**
+ * This class is responsible for causing the state of the bunker to
+ * change to the colour red
+ */
 public class YellowState implements BunkerState{
 
     private Bunker bunker;
@@ -13,10 +17,6 @@ public class YellowState implements BunkerState{
         this.bunker = bunker;
     }
 
-    /**
-     * This class is responsible for causing the state of the bunker to
-     * change to the colour red
-     */
     @Override
     public void takeDamage() {
         bunker.changeState(new RedState(bunker));

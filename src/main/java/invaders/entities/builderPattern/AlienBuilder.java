@@ -4,12 +4,11 @@ import invaders.ConfigReader;
 import invaders.physics.Vector2D;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
-import java.io.FileReader;
-import java.io.IOException;
-
+/**
+ * This class reads all the relevant alien information from the config file
+ * and is responsible for building the Alien object
+ */
 public class AlienBuilder implements AlienBuilderInterface {
 
     private ConfigReader config = new ConfigReader();
@@ -17,10 +16,6 @@ public class AlienBuilder implements AlienBuilderInterface {
     private Vector2D position;
     private String projectileStrategy;
 
-    /**
-     * This class reads all the relevant alien information from the config file
-     * and is responsible for building the Alien object
-     */
     public AlienBuilder() {
         this.jsonEnemies = config.getAlienObjects();
     }

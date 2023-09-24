@@ -1,15 +1,17 @@
 package invaders.entities.factoryMethod;
 
 import invaders.GameObject;
-import invaders.entities.EntityView;
 import invaders.entities.strategy.ProjectileStrategy;
 import invaders.logic.Damagable;
 import invaders.physics.Collider;
 import invaders.physics.Moveable;
 import invaders.physics.Vector2D;
-import invaders.rendering.Renderable;
 import javafx.scene.image.Image;
 
+/**
+ * This abstract class represents all other Projectile
+ * objects extending it which are shot by either the Player or Aliens
+ */
 public abstract class Projectile implements Moveable, GameObject, Collider, Damagable {
 
     protected final Vector2D position;

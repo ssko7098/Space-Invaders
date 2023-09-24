@@ -8,7 +8,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 
 /**
- * Represents something that can be rendered
+ * Represents something that can be rendered onto the screen
  */
 public interface Renderable {
 

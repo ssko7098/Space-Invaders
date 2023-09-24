@@ -5,6 +5,10 @@ import invaders.rendering.Renderable;
 import javafx.scene.Node;
 import javafx.scene.image.ImageView;
 
+/**
+ * This class represents the images which will be
+ * marked for delete and hence removed from the screen.
+ */
 public class EntityViewImpl implements EntityView {
     private Renderable entity;
     private Vector2D position;
