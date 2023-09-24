@@ -21,12 +21,14 @@ The classes/files involved in this design pattern are:
 
 ### Builder Pattern (Creational)
 The classes/files involved in this design pattern are:
-* `BunkerEnemyBuilder` (interface)
+* `AlienBuilderInterface` (interface)
+* `BunkerBuilderInterface` (interface)
 * `AlienBuilder`
 * `BunkerBuilder`
 * `Alien`
 * `Bunker`
-* `Director`
+* `AlienDirector`
+* `BunkerDirector`
 
 ### State Design Pattern (Behavioural)
 The classes/files involved in this design pattern are:
